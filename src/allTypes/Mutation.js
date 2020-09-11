@@ -40,7 +40,7 @@ export const Mutation = mutationType({
                 async (_, { content, question }, ctx) => {
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
                     const createdComment = await CommentModel.create({ content, question, user: ctx.req.user._id });
                     const newComment = await CommentModel.findById(createdComment._id).populate(['user']);
@@ -56,7 +56,7 @@ export const Mutation = mutationType({
                 async (_, { content, question }, ctx) => {
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
                     const createdAnswer = await AnswerModel.create({ content, question, user: ctx.req.user._id });
                     const newAnswer = await AnswerModel.findById(createdAnswer._id).populate(['user', 'question']);
@@ -73,7 +73,7 @@ export const Mutation = mutationType({
                 async (_, { title, description, tags }, ctx) => {
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
                     const createdQuestion = await QuestionModel.create({ title, description, tags: tags || 'none', user: ctx.req.user._id });
                     const newQuestion = QuestionModel.findById(createdQuestion._id).populate(['user', 'comment']);
@@ -92,7 +92,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const comment = await CommentModel.findById(args.id);
@@ -102,7 +102,7 @@ export const Mutation = mutationType({
                     }
 
                     if (comment.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     let body = {};
@@ -127,7 +127,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const answer = await AnswerModel.findById(args.id);
@@ -137,7 +137,7 @@ export const Mutation = mutationType({
                     }
 
                     if (answer.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     let body = {};
@@ -162,7 +162,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const question = await QuestionModel.findById(args.id);
@@ -172,7 +172,7 @@ export const Mutation = mutationType({
                     }
 
                     if (question.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     let body = {};
@@ -206,7 +206,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const comment = await CommentModel.findById(id);
@@ -216,7 +216,7 @@ export const Mutation = mutationType({
                     }
 
                     if (comment.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     return await CommentModel.findByIdAndDelete(id)
@@ -233,7 +233,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const answer = await AnswerModel.findById(id);
@@ -243,7 +243,7 @@ export const Mutation = mutationType({
                     }
 
                     if (answer.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     return await AnswerModel.findByIdAndDelete(id)
@@ -261,7 +261,7 @@ export const Mutation = mutationType({
 
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const question = await QuestionModel.findById(id);
@@ -271,7 +271,7 @@ export const Mutation = mutationType({
                     }
 
                     if (question.user.toString() !== ctx.req.user._id.toString()) {
-                        throw new ErrorResponse('Not Auth!!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     return await QuestionModel.findByIdAndDelete(id)

@@ -102,7 +102,7 @@ export const Query = queryType({
                 async (parent, args, ctx) => {
                     const isAuthenticated = await isProtected(ctx);
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth!', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
                     return ctx.req.user;
                 }
@@ -118,7 +118,7 @@ export const Query = queryType({
                     const isAuthenticated = await isProtected(ctx);
 
                     if (!isAuthenticated) {
-                        throw new ErrorResponse('Not Auth', 401);
+                        throw new ErrorResponse('Not Authorized', 401);
                     }
 
                     const users = await UserModel.find().populate(['questions', 'answers']);

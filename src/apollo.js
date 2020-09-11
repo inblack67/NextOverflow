@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { useMemo } from 'react';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
+import Router from 'next/router';
 
 let apolloClient;
 
@@ -20,10 +21,14 @@ function createIsomorphLink() {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-        graphQLErrors.map(({ message, locations, path }) =>
+        graphQLErrors.map(({ message, locations, path, status }) => {
             console.log(
                 `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),
+            )
+            if(message === 'Not Authorized'){
+                Router.replace('/');
+            }
+        }
         );
     }
 

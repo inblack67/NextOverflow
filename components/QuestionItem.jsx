@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
-const QuestionItem = ({ question: { title, description, _id, user: { name } } }) => {
+const QuestionItem = ({ question: { title, tags, description, _id, user: { name } } }) => {
 
     return (
         <div className='col s12 m6 l6'>
@@ -16,9 +16,12 @@ const QuestionItem = ({ question: { title, description, _id, user: { name } } })
                     </p>
                 </div>
                 <div className="card-action">
-                    <Link href='/'>
+                    <Link href='/question/[id]' as={`/question/${_id}`}>
                         <a>Explore</a>
                     </Link>
+                    <a href="#!" className='secondary-content'>
+                        {tags}
+                    </a>
                 </div>
             </div>
         </div>
