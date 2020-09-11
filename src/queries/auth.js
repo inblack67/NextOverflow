@@ -28,3 +28,11 @@ mutation{
 }
 `;
 
+export const getMeQuery = gql`
+query {
+  getMe{
+  _id
+}
+}
+`;
+

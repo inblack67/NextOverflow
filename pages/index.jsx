@@ -19,7 +19,7 @@ const index = () => {
         <div className='container'>
             <p className="flow-text center">Questions</p>
             <div className="row">
-                {questions.map(question => <QuestionItem question={question} key={question._id} />)}
+                {questions.length >= 1 && questions.map(question => <QuestionItem question={question} key={question._id} />)}
             </div>
             <div className="fixed-action-btn">
                 <Link href='/ask-question'>

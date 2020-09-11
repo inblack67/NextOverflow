@@ -9,6 +9,7 @@ query {
     _id
     user{
       name
+      _id
     }
   }
 }
@@ -19,6 +20,14 @@ mutation ($title: String!, $description: String!, $tags: String){
   addQuestion(title:$title, description:$description, tags: $tags){
     title,
     _id
+  }
+}
+`;
+
+export const deleteQuestionMutation = gql`
+mutation ($id: ID!){
+  deleteQuestion(id: $id){
+    title
   }
 }
 `;
