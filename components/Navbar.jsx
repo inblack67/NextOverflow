@@ -10,8 +10,11 @@ const Navbar = () => {
 
     const onLogout = e => {
         logout().then(() => {
+            localStorage.removeItem('isAuthenticated')
             M.toast({ html: 'Logged Out!' })
             Router.replace('/login');
+        }).catch(err => {
+            M.toast({ html: err });
         });
     }
 

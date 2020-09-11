@@ -9,7 +9,12 @@ const Login = () => {
 
     const [submitting, setSubmitting] = useState(false);
 
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm({
+        defaultValues: {
+            email: 'aman@gmail.com',
+            password: '12345678'
+        }
+    });
 
     const [login, { loading, data }] = useMutation(loginMutation);
 
@@ -25,7 +30,9 @@ const Login = () => {
             localStorage.setItem('isAuthenticated', true);
             M.toast({ html: 'Logged In!' });
             Router.push('/');
-        }).catch(err => console.error(err));
+        }).catch(err => {
+            M.toast({ html: err });
+        });
 
         setSubmitting(false);
     }

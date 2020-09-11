@@ -1,22 +1,39 @@
-import { server } from '../src/server';
+import { useQuery } from '@apollo/client';
+import { fetchAllQuestionsQuery } from '../src/queries/questions';
+import Preloader from '../components/Preloader';
+import { initializeApollo } from '../src/apollo';
+import QuestionItem from '../components/QuestionItem';
 
-const About = () => {
+const index = () => {
+
+    const { loading, data } = useQuery(fetchAllQuestionsQuery);
+
+    if (loading) {
+        return <Preloader />
+    }
+
+    const { questions } = data;
+
     return (
         <div className='container'>
-            <h3>NextOverlow</h3>
-            <p className="flow-text">
-                Nextjs | GraphQL | Apollo | MongoDB | Materialize
-          </p>
-            <a href={`${server}/api/graphql`} className="btn purple pulse">
-                Go Play
-            </a>
-            <p className="helper-text">Frontend it boring. Might make it some other time.</p>
-            <hr />
-            <strong>
-                NextOverlow &copy; 2020
-          </strong>
+            <p className="flow-text center">Questions</p>
+            <div className="row">
+                {questions.map(question => <QuestionItem question={question} key={question._id} />)}
+            </div>
         </div>
     )
 }
 
-export default About
+export const getStaticProps = async () => {
+    const apolloClient = initializeApollo();
+    await apolloClient.query({
+        query: fetchAllQuestionsQuery
+    });
+    return {
+        props: {
+            initialApolloState: apolloClient.cache.extract()
+        }
+    }
+}
+
+export default index;

@@ -2,7 +2,7 @@
 
 const Preloader = () => {
     return (
-        <div>
+        <div id='preloader'>
             <div className="preloader-wrapper active">
                 <div className="spinner-layer spinner-red-only">
                     <div className="circle-clipper left">

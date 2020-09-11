@@ -10,7 +10,13 @@ const Register = () => {
 
     const [submitting, setSubmitting] = useState(false);
 
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm({
+        defaultValues: {
+            name: 'aman',
+            email: 'aman@gmail.com',
+            password: 'Aman123@'
+        }
+    });
 
     const [registerUser, { data, loading }] = useMutation(registerMutation);
 
@@ -26,7 +32,9 @@ const Register = () => {
             localStorage.setItem('isAuthenticated', true);
             M.toast({ html: 'Registered!' });
             Router.push('/');
-        }).catch(err => console.error(err));
+        }).catch(err => {
+            M.toast({ html: err });
+        });
         setSubmitting(false);
     }
 

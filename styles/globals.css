@@ -6,3 +6,10 @@ body{
 input, label, textarea{
     color: white;
 }
+
+#preloader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
