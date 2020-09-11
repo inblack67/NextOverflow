@@ -13,5 +13,4 @@ function MyApp({ Component, pageProps }) {
     </Layout>
   </ApolloProvider>
 }
-
 export default MyApp

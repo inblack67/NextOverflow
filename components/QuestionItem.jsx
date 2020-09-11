@@ -9,6 +9,7 @@ import Preloader from './Preloader'
 const QuestionItem = ({ question: { title, tags, description, _id, user: { name }, user } }) => {
 
     const { loading, data } = useQuery(getMeQuery);
+
     const [deleteQuestion, mutationResponse] = useMutation(deleteQuestionMutation, {
         variables: {
             id: _id
@@ -51,7 +52,7 @@ const QuestionItem = ({ question: { title, tags, description, _id, user: { name 
                     <Link href='/question/[id]' as={`/question/${_id}`}>
                         <a>Explore</a>
                     </Link>
-                    {getMe._id.toString() === user._id.toString() ? <a href="#!" className='secondary-content' onClick={onDelete}>
+                    {getMe._id === user._id ? <a href="#!" className='secondary-content' onClick={onDelete}>
                         Delete
                     </a> : null}
                 </div>

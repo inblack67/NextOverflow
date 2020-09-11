@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { addQuestionMutation } from '../src/queries/questions';
+import { getMeQuery } from '../src/queries/auth';
 import Router from 'next/router';
 import Preloader from '../components/Preloader';
 
 const AskQuestion = () => {
+
+    const getMeResponse = useQuery(getMeQuery);
 
     const [submitting, setSubmitting] = useState(false);
 
@@ -40,11 +43,9 @@ const AskQuestion = () => {
         setSubmitting(false);
     }
 
-    if (loading) {
+    if (loading || getMeResponse.loading) {
         return <Preloader />
     }
-
-    console.log(data);
 
     return (
         <div className='container'>
