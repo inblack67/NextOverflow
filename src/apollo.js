@@ -10,16 +10,11 @@ function createIsomorphLink() {
         const { schema } = require('./schema')
         return new SchemaLink({ schema })
     } else {
-        const { createUploadLink } = require('apollo-upload-client');
-        return createUploadLink({
+        const { HttpLink } = require('@apollo/client/link/http')
+        return new HttpLink({
             uri: '/api/graphql',
-            credentials: 'include',
+            credentials: 'same-origin',
         })
-        // const { HttpLink } = require('@apollo/client/link/http')
-        // return new HttpLink({
-        //     uri: '/api/graphql',
-        //     credentials: 'same-origin',
-        // })
     }
 }
 
@@ -41,7 +36,7 @@ function createApolloClient() {
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
         link: errorLink.concat(createIsomorphLink()),
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache()
     })
 }
 

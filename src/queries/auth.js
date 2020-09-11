@@ -20,3 +20,11 @@ mutation ($name: String!, $email: String!, $password: String!){
 }
 `;
 
+export const logoutMutation = gql`
+mutation{
+  logout{
+    name
+  }
+}
+`;
+

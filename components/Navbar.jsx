@@ -1,6 +1,23 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import { useMutation } from '@apollo/client';
+import { logoutMutation } from '../src/queries/auth';
+import Preloader from './Preloader';
+import Router from 'next/router';
 
 const Navbar = () => {
+
+    const [logout, { loading }] = useMutation(logoutMutation);
+
+    const onLogout = e => {
+        logout().then(() => {
+            M.toast({ html: 'Logged Out!' })
+            Router.replace('/login');
+        });
+    }
+
+    if (loading) {
+        return <Preloader />
+    }
 
     return (
         <nav className='black'>
@@ -13,6 +30,11 @@ const Navbar = () => {
                     </Link>
                     <ul className="right">
                         <li>
+                            <a href='#!' onClick={onLogout}>
+                                Logout
+                           </a>
+                        </li>
+                        <li>
                             <Link href='/login'>
                                 <a>
                                     Login
@@ -23,13 +45,6 @@ const Navbar = () => {
                             <Link href='/register'>
                                 <a>
                                     Register
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href='/login'>
-                                <a>
-                                    Logout
                                 </a>
                             </Link>
                         </li>
