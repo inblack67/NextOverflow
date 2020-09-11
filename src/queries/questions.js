@@ -15,15 +15,10 @@ query {
 `;
 
 export const addQuestionMutation = gql`
-mutation{
-  addQuestion(title:"Why Next.js", description:"Why bother?"){
-    title
-    description
-    tags
+mutation ($title: String!, $description: String!, $tags: String){
+  addQuestion(title:$title, description:$description, tags: $tags){
+    title,
     _id
-    user{
-      name
-    }
   }
 }
 `;

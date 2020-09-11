@@ -26,7 +26,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
                 `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
             )
             if(message === 'Not Authorized'){
-                Router.replace('/');
+                M.toast({ html: 'You must login first!' })
+                Router.replace('/login');
             }
         }
         );
