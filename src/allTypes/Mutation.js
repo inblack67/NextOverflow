@@ -289,6 +289,12 @@ export const Mutation = mutationType({
             resolve: asyncHandler(
                 async (parent, { email, password }, ctx) => {
 
+                    const isAuthenticated = await isProtected(ctx);
+
+                    if (isAuthenticated) {
+                        throw new ErrorResponse('Not Authorized', 400);
+                    }
+
                     const user = await UserModel.findOne({ email }).select('+password');
 
                     if (!user) {
@@ -352,6 +358,13 @@ export const Mutation = mutationType({
             },
             resolve: asyncHandler(
                 async (parent, { name, email, password }, ctx) => {
+
+                    const isAuthenticated = await isProtected(ctx);
+
+                    if (isAuthenticated) {
+                        throw new ErrorResponse('Not Authorized', 400);
+                    }
+
                     const user = await UserModel.create({ name, email, password });
                     const token = user.getSignedJwtToken();
                     ctx.res.setHeader('Set-Cookie', serialize('token', token, {
