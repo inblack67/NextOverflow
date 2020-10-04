@@ -33,10 +33,6 @@ const QuestionItem = ({ question: { title, tags, description, _id, user: { name 
         });
     }
 
-    const { getMe } = data;
-
-    console.log(mutationResponse.data);
-
     return (
         <div className='col s12 m6 l6'>
             <div className="card grey darken-3">
@@ -52,7 +48,7 @@ const QuestionItem = ({ question: { title, tags, description, _id, user: { name 
                     <Link href='/question/[id]' as={`/question/${_id}`}>
                         <a>Explore</a>
                     </Link>
-                    {getMe._id === user._id ? <a href="#!" className='secondary-content' onClick={onDelete}>
+                    {data && data.getMe._id === user._id ? <a href="#!" className='secondary-content' onClick={onDelete}>
                         Delete
                     </a> : null}
                 </div>

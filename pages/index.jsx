@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { fetchAllQuestionsQuery } from '../src/queries/questions';
 import Preloader from '../components/Preloader';
-import { initializeApollo } from '../src/apollo';
 import QuestionItem from '../components/QuestionItem';
 import Link from 'next/link';
 
@@ -30,18 +29,6 @@ const index = () => {
             </div>
         </div>
     )
-}
-
-export const getStaticProps = async () => {
-    const apolloClient = initializeApollo();
-    await apolloClient.query({
-        query: fetchAllQuestionsQuery
-    });
-    return {
-        props: {
-            initialApolloState: apolloClient.cache.extract()
-        }
-    }
 }
 
 export default index;

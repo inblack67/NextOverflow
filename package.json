@@ -16,13 +16,17 @@
     "cookie": "^0.4.1",
     "graphql-scalars": "^1.2.6",
     "graphql-upload": "^11.0.0",
+    "gray-matter": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.3",
     "next": "9.5.2",
     "next-connect": "^0.8.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-hook-form": "^6.7.2"
+    "react-hook-form": "^6.7.2",
+    "react-markdown": "^4.3.1",
+    "react-syntax-highlighter": "^15.0.1",
+    "rich-markdown-editor": "^11.0.0-4"
   },
   "devDependencies": {
     "colors": "^1.4.0"
