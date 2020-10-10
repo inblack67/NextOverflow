@@ -5,7 +5,6 @@ import QuestionModel from '../../models/Question';
 import CommentModel from '../../models/Comment';
 import RoomModel from '../../models/Room';
 import { User } from './User';
-import { File } from './File';
 import { Question } from './Question';
 import { Answer } from './Answer';
 import { Room } from './Room';
@@ -40,8 +39,16 @@ export const Mutation = mutationType({
 
 				const body = { room: args.room, text: args.text, user: ctx.req.user._id };
 
-				if (args.url) {
-					body.url = args.url;
+				if (args.image) {
+					body.image = args.image;
+				}
+
+				if (args.file) {
+					body.file = args.file;
+				}
+
+				if (args.video) {
+					body.video = args.video;
 				}
 
 				const newMessage = await MessageModel.create(body);
@@ -78,14 +85,27 @@ export const Mutation = mutationType({
 			}),
 		});
 
-		t.field('uploadImage', {
-			type: 'String',
+		t.field('uploadUserImage', {
+			type: User,
 			nullable: true,
 			description: 'Upload Image',
-			args: { file: arg({ type: GraphQLUpload }) },
-			resolve: asyncHandler(async (_, { file }, ctx) => {
-				console.log(file);
-				return 'Uploaded';
+			args: { url: stringArg() },
+			resolve: asyncHandler(async (_, { url }, ctx) => {
+				const isAuthenticated = await isProtected(ctx);
+
+				if (!isAuthenticated) {
+					throw new ErrorResponse('Not Authorized', 401);
+				}
+
+				const user = await UserModel.findByIdAndUpdate(
+					ctx.req.user._id,
+					{ image: url },
+					{
+						new: true,
+					},
+				).populate([ 'questions', 'answers', 'comments' ]);
+
+				return user;
 			}),
 		});
 
@@ -127,7 +147,7 @@ export const Mutation = mutationType({
 					title,
 					description,
 				});
-				const room = await RoomModel.findById(newRoom._id).populate(['users', 'messages'])
+				const room = await RoomModel.findById(newRoom._id).populate([ 'users', 'messages' ]);
 				return room;
 			}),
 		});
@@ -231,7 +251,7 @@ export const Mutation = mutationType({
 				description: stringArg({ nullable: true }),
 			},
 			resolve: asyncHandler(async (parent, args, ctx) => {
-				const room = await RoomModel.findById(args.id).populate(['users', 'messages']);
+				const room = await RoomModel.findById(args.id).populate([ 'users', 'messages' ]);
 
 				if (!room) {
 					throw new ErrorResponse('Resource not found', 404);
@@ -247,7 +267,10 @@ export const Mutation = mutationType({
 					body.description = args.description;
 				}
 
-				const updatedRoom = await RoomModel.findByIdAndUpdate(args.id, body, { new: true }).populate(['users', 'messages']);
+				const updatedRoom = await RoomModel.findByIdAndUpdate(args.id, body, { new: true }).populate([
+					'users',
+					'messages',
+				]);
 				return updatedRoom;
 			}),
 		});
@@ -354,7 +377,7 @@ export const Mutation = mutationType({
 			nullable: true,
 			args: { id: idArg() },
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
-				const room = await RoomModel.findById(id).populate(['users', 'messages']);
+				const room = await RoomModel.findById(id).populate([ 'users', 'messages' ]);
 
 				return await RoomModel.findByIdAndDelete(id);
 			}),

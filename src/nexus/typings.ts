@@ -25,7 +25,6 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
-  Upload: any
 }
 
 export interface NexusGenRootTypes {
@@ -89,6 +88,7 @@ export interface NexusGenRootTypes {
     comments?: NexusGenRootTypes['Comment'][] | null; // [Comment!]
     createdAt: string; // String!
     email: string; // String!
+    image?: string | null; // String
     messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password?: string | null; // String
@@ -102,7 +102,6 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   Float: NexusGenScalars['Float'];
   Boolean: NexusGenScalars['Boolean'];
   ID: NexusGenScalars['ID'];
-  Upload: NexusGenScalars['Upload'];
 }
 
 export interface NexusGenFieldTypes {
@@ -154,7 +153,7 @@ export interface NexusGenFieldTypes {
     updateComment: NexusGenRootTypes['Comment'] | null; // Comment
     updateQuestion: NexusGenRootTypes['Question'] | null; // Question
     updateRoom: NexusGenRootTypes['Room'] | null; // Room
-    uploadImage: string | null; // String
+    uploadUserImage: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
     answer: NexusGenRootTypes['Answer'] | null; // Answer
@@ -197,6 +196,7 @@ export interface NexusGenFieldTypes {
     comments: NexusGenRootTypes['Comment'][] | null; // [Comment!]
     createdAt: string; // String!
     email: string; // String!
+    image: string | null; // String
     messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password: string | null; // String
@@ -271,8 +271,8 @@ export interface NexusGenArgTypes {
       id?: string | null; // ID
       title?: string | null; // String
     }
-    uploadImage: { // args
-      file?: NexusGenScalars['Upload'] | null; // Upload
+    uploadUserImage: { // args
+      url?: string | null; // String
     }
   }
   Query: {
@@ -318,7 +318,7 @@ export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String" | "Upload";
+export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

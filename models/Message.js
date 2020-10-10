@@ -11,10 +11,17 @@ const MessageSchema = new Schema({
 		ref: 'Room',
 		required: [ true, 'Which room does this message belongs to?' ],
 	},
-	url: {
+	image: {
 		type: String,
 		trim: true,
-		default: 'none',
+	},
+	file: {
+		type: String,
+		trim: true,
+	},
+	video: {
+		type: String,
+		trim: true,
 	},
 	user: {
 		type: Schema.ObjectId,

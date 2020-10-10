@@ -15,6 +15,10 @@ connectDB();
 const deleteAll = async () => {
 	await MessageModel.deleteMany();
 	await RoomModel.deleteMany();
+	await UserModel.deleteMany();
+	await CommentModel.deleteMany();
+	await AnswerModel.deleteMany();
+	await QuestionModel.deleteMany();
 	console.log(`Data Deleted`.red.bold.inverse);
 	process.exit(0);
 };

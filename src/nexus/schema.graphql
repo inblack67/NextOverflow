@@ -85,7 +85,7 @@ type Mutation {
   updateRoom(description: String, id: ID, title: String): Room
 
   """Upload Image"""
-  uploadImage(file: Upload): String
+  uploadUserImage(url: String): User
 }
 
 type Query {
@@ -146,15 +146,13 @@ type Subscription {
   newRoomMessage(room: ID): Message!
 }
 
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
 type User {
   _id: ID!
   answers: [Answer!]
   comments: [Comment!]
   createdAt: String!
   email: String!
+  image: String
   messages: [Message!]
   name: String!
   password: String

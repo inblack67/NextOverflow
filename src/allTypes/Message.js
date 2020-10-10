@@ -7,7 +7,9 @@ export const Message = objectType({
 	definition(t) {
 		t.id('_id');
 		t.string('text');
-		t.string('url', { nullable: true });
+		t.string('image', { nullable: true });
+		t.string('file', { nullable: true });
+		t.string('video', { nullable: true });
 		t.field('room', {
 			type: Room,
 		});
