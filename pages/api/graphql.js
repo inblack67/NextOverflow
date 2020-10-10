@@ -4,7 +4,6 @@ import { schema } from '../../src/schema';
 import nextConnect from 'next-connect';
 import errorHandler from '../../middlewares/errorHandler';
 import { connectDB } from '../../src/connectDB';
-import morgan from 'morgan';
 import cors from 'cors';
 
 connectDB();
@@ -18,13 +17,15 @@ const apolloServer = new ApolloServer({
 	subscriptions: {
 		path: '/api/graphql',
 		keepAlive: 9000,
-		onConnect: console.log('Subscriptions are here'.blue.bold),
+		onConnect: (connectionParams, ws, ctx) => {
+			console.log('Subscriptions are here'.blue.bold);
+		},
 		onDisconnect: () => console.log('Subscriptions disconnected'.red.bold),
 	},
 	playground: {
 		subscriptionEndpoint: '/api/graphql',
 		settings: {
-			'request.credentials': 'same-origin',
+			'request.credentials': 'include',
 		},
 	},
 });

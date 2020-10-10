@@ -3,6 +3,7 @@ export * from './Comment';
 export * from './Question';
 export * from './User';
 export * from './File';
+export * from './Room';
 export * from './Query';
 export * from './Mutation';
 export * from './Subscription';

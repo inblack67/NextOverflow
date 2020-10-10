@@ -27,24 +27,41 @@ type File {
   user: User!
 }
 
+type Message {
+  _id: ID!
+  createdAt: String!
+  text: String!
+  time: String!
+  url: String
+  user: User!
+}
+
 type Mutation {
   """Add Answer"""
   addAnswer(content: String, question: ID): Answer!
 
   """Add Comment"""
   addComment(content: String, question: ID): Comment!
+  addMessage(room: String, text: String, time: String, url: String): Message!
 
   """Add Question"""
   addQuestion(description: String, tags: String, title: String): Question!
+
+  """Add Room"""
+  addRoom(description: String, title: String): Room!
 
   """Delete Answer"""
   deleteAnswer(id: ID): Answer
 
   """Delete Comment"""
   deleteComment(id: ID): Comment
+  deleteMessage(id: ID): Message!
 
   """Delete Question"""
   deleteQuestion(id: ID): Question
+
+  """Delete Room"""
+  deleteRoom(id: ID): Room
 
   """Login"""
   login(email: String, password: String): User!
@@ -64,22 +81,25 @@ type Mutation {
   """Update Question"""
   updateQuestion(description: String, id: ID, tags: String, title: String): Question
 
+  """Update Room"""
+  updateRoom(description: String, id: ID, title: String): Room
+
   """Upload Image"""
   uploadImage(file: Upload): String
 }
 
 type Query {
   """Get Single Answer"""
-  answer(id: ID): Answer!
+  answer(id: ID): Answer
 
   """Get Single Comment"""
-  comment(id: ID): Comment!
+  comment(id: ID): Comment
 
   """Get Logged In User"""
   getMe: User!
 
   """Get Single Question"""
-  question(id: ID): Question!
+  question(id: ID): Question
 
   """Get All Answers Of A Question"""
   questionAnswers(question: ID): [Answer!]!
@@ -89,6 +109,12 @@ type Query {
 
   """Get All Questions"""
   questions: [Question!]!
+
+  """Get Single Room"""
+  room(id: ID): Room
+
+  """Get All Rooms"""
+  rooms: [Room!]!
 
   """GET All Users"""
   users: [User!]!
@@ -105,8 +131,16 @@ type Question {
   user: User!
 }
 
+type Room {
+  _id: ID!
+  createdAt: String!
+  description: String!
+  title: String!
+}
+
 type Subscription {
   count: Int
+  messages(room: String): [Message!]!
 }
 
 """The `Upload` scalar type represents a file upload."""

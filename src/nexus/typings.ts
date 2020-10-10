@@ -51,6 +51,14 @@ export interface NexusGenRootTypes {
     mimetype: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Message: { // root type
+    _id: string; // ID!
+    createdAt: string; // String!
+    text: string; // String!
+    time: string; // String!
+    url?: string | null; // String
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: {};
   Query: {};
   Question: { // root type
@@ -63,8 +71,15 @@ export interface NexusGenRootTypes {
     title: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Room: { // root type
+    _id: string; // ID!
+    createdAt: string; // String!
+    description: string; // String!
+    title: string; // String!
+  }
   Subscription: { // root type
     count?: number | null; // Int
+    messages: NexusGenRootTypes['Message'][]; // [Message!]!
   }
   User: { // root type
     _id: string; // ID!
@@ -110,29 +125,44 @@ export interface NexusGenFieldTypes {
     mimetype: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Message: { // field return type
+    _id: string; // ID!
+    createdAt: string; // String!
+    text: string; // String!
+    time: string; // String!
+    url: string | null; // String
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: { // field return type
     addAnswer: NexusGenRootTypes['Answer']; // Answer!
     addComment: NexusGenRootTypes['Comment']; // Comment!
+    addMessage: NexusGenRootTypes['Message']; // Message!
     addQuestion: NexusGenRootTypes['Question']; // Question!
+    addRoom: NexusGenRootTypes['Room']; // Room!
     deleteAnswer: NexusGenRootTypes['Answer'] | null; // Answer
     deleteComment: NexusGenRootTypes['Comment'] | null; // Comment
+    deleteMessage: NexusGenRootTypes['Message']; // Message!
     deleteQuestion: NexusGenRootTypes['Question'] | null; // Question
+    deleteRoom: NexusGenRootTypes['Room'] | null; // Room
     login: NexusGenRootTypes['User']; // User!
     logout: NexusGenRootTypes['User'] | null; // User
     register: NexusGenRootTypes['User']; // User!
     updateAnswer: NexusGenRootTypes['Answer'] | null; // Answer
     updateComment: NexusGenRootTypes['Comment'] | null; // Comment
     updateQuestion: NexusGenRootTypes['Question'] | null; // Question
+    updateRoom: NexusGenRootTypes['Room'] | null; // Room
     uploadImage: string | null; // String
   }
   Query: { // field return type
-    answer: NexusGenRootTypes['Answer']; // Answer!
-    comment: NexusGenRootTypes['Comment']; // Comment!
+    answer: NexusGenRootTypes['Answer'] | null; // Answer
+    comment: NexusGenRootTypes['Comment'] | null; // Comment
     getMe: NexusGenRootTypes['User']; // User!
-    question: NexusGenRootTypes['Question']; // Question!
+    question: NexusGenRootTypes['Question'] | null; // Question
     questionAnswers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     questionComments: NexusGenRootTypes['Comment'][]; // [Comment!]!
     questions: NexusGenRootTypes['Question'][]; // [Question!]!
+    room: NexusGenRootTypes['Room'] | null; // Room
+    rooms: NexusGenRootTypes['Room'][]; // [Room!]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Question: { // field return type
@@ -145,8 +175,15 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Room: { // field return type
+    _id: string; // ID!
+    createdAt: string; // String!
+    description: string; // String!
+    title: string; // String!
+  }
   Subscription: { // field return type
     count: number | null; // Int
+    messages: NexusGenRootTypes['Message'][]; // [Message!]!
   }
   User: { // field return type
     _id: string; // ID!
@@ -170,9 +207,19 @@ export interface NexusGenArgTypes {
       content?: string | null; // String
       question?: string | null; // ID
     }
+    addMessage: { // args
+      room?: string | null; // String
+      text?: string | null; // String
+      time?: string | null; // String
+      url?: string | null; // String
+    }
     addQuestion: { // args
       description?: string | null; // String
       tags?: string | null; // String
+      title?: string | null; // String
+    }
+    addRoom: { // args
+      description?: string | null; // String
       title?: string | null; // String
     }
     deleteAnswer: { // args
@@ -181,7 +228,13 @@ export interface NexusGenArgTypes {
     deleteComment: { // args
       id?: string | null; // ID
     }
+    deleteMessage: { // args
+      id?: string | null; // ID
+    }
     deleteQuestion: { // args
+      id?: string | null; // ID
+    }
+    deleteRoom: { // args
       id?: string | null; // ID
     }
     login: { // args
@@ -207,6 +260,11 @@ export interface NexusGenArgTypes {
       tags?: string | null; // String
       title?: string | null; // String
     }
+    updateRoom: { // args
+      description?: string | null; // String
+      id?: string | null; // ID
+      title?: string | null; // String
+    }
     uploadImage: { // args
       file?: NexusGenScalars['Upload'] | null; // Upload
     }
@@ -227,6 +285,14 @@ export interface NexusGenArgTypes {
     questionComments: { // args
       question?: string | null; // ID
     }
+    room: { // args
+      id?: string | null; // ID
+    }
+  }
+  Subscription: {
+    messages: { // args
+      room?: string | null; // String
+    }
   }
 }
 
@@ -235,7 +301,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Answer" | "Comment" | "File" | "Mutation" | "Query" | "Question" | "Subscription" | "User";
+export type NexusGenObjectNames = "Answer" | "Comment" | "File" | "Message" | "Mutation" | "Query" | "Question" | "Room" | "Subscription" | "User";
 
 export type NexusGenInputNames = never;
 
