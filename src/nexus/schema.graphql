@@ -18,22 +18,15 @@ type Comment {
   user: User!
 }
 
-type File {
-  _id: ID!
-  createdAt: String!
-  encoding: String!
-  filename: String!
-  mimetype: String!
-  user: User!
-}
-
 type Message {
   _id: ID!
   createdAt: String!
+  file: String
+  image: String
   room: Room!
   text: String!
-  url: String
   user: User!
+  video: String
 }
 
 type Mutation {

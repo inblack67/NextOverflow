@@ -42,21 +42,15 @@ export interface NexusGenRootTypes {
     question: string; // ID!
     user: NexusGenRootTypes['User']; // User!
   }
-  File: { // root type
-    _id: string; // ID!
-    createdAt: string; // String!
-    encoding: string; // String!
-    filename: string; // String!
-    mimetype: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-  }
   Message: { // root type
     _id: string; // ID!
     createdAt: string; // String!
+    file?: string | null; // String
+    image?: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
     text: string; // String!
-    url?: string | null; // String
     user: NexusGenRootTypes['User']; // User!
+    video?: string | null; // String
   }
   Mutation: {};
   Query: {};
@@ -119,21 +113,15 @@ export interface NexusGenFieldTypes {
     question: string; // ID!
     user: NexusGenRootTypes['User']; // User!
   }
-  File: { // field return type
-    _id: string; // ID!
-    createdAt: string; // String!
-    encoding: string; // String!
-    filename: string; // String!
-    mimetype: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-  }
   Message: { // field return type
     _id: string; // ID!
     createdAt: string; // String!
+    file: string | null; // String
+    image: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
     text: string; // String!
-    url: string | null; // String
     user: NexusGenRootTypes['User']; // User!
+    video: string | null; // String
   }
   Mutation: { // field return type
     addAnswer: NexusGenRootTypes['Answer']; // Answer!
@@ -310,7 +298,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Answer" | "Comment" | "File" | "Message" | "Mutation" | "Query" | "Question" | "Room" | "Subscription" | "User";
+export type NexusGenObjectNames = "Answer" | "Comment" | "Message" | "Mutation" | "Query" | "Question" | "Room" | "Subscription" | "User";
 
 export type NexusGenInputNames = never;
 
