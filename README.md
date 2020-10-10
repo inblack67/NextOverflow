@@ -1,6 +1,6 @@
 # NextOverflow
 - StackOverflow clone and beyond.
-- JWT Auth, Questions, Answers, Comments, Realtime Slack/Rooms, you name it.
+- JWT Auth, Questions, Answers, Comments, Realtime Rooms, Media Uploads, you name it.
 - Tech Stack
     - Next.js
     - GraphQL
