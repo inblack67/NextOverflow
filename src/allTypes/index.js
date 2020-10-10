@@ -5,3 +5,4 @@ export * from './User';
 export * from './File';
 export * from './Query';
 export * from './Mutation';
+export * from './Subscription';

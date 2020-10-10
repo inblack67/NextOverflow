@@ -105,6 +105,10 @@ type Question {
   user: User!
 }
 
+type Subscription {
+  count: Int
+}
+
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 

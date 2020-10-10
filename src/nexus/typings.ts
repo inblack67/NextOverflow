@@ -63,6 +63,9 @@ export interface NexusGenRootTypes {
     title: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Subscription: { // root type
+    count?: number | null; // Int
+  }
   User: { // root type
     _id: string; // ID!
     answers?: NexusGenRootTypes['Answer'][] | null; // [Answer!]
@@ -141,6 +144,9 @@ export interface NexusGenFieldTypes {
     tags: string; // String!
     title: string; // String!
     user: NexusGenRootTypes['User']; // User!
+  }
+  Subscription: { // field return type
+    count: number | null; // Int
   }
   User: { // field return type
     _id: string; // ID!
@@ -229,7 +235,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Answer" | "Comment" | "File" | "Mutation" | "Query" | "Question" | "User";
+export type NexusGenObjectNames = "Answer" | "Comment" | "File" | "Mutation" | "Query" | "Question" | "Subscription" | "User";
 
 export type NexusGenInputNames = never;
 
