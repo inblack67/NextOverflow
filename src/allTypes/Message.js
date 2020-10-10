@@ -1,5 +1,6 @@
 import { objectType } from '@nexus/schema';
 import { User } from './User';
+import { Room } from './Room';
 
 export const Message = objectType({
 	name: 'Message',
@@ -7,7 +8,9 @@ export const Message = objectType({
 		t.id('_id');
 		t.string('text');
 		t.string('url', { nullable: true });
-		t.string('time');
+		t.field('room', {
+			type: Room,
+		});
 		t.field('user', {
 			type: User,
 		});

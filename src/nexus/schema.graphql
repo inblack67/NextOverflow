@@ -30,8 +30,8 @@ type File {
 type Message {
   _id: ID!
   createdAt: String!
+  room: Room!
   text: String!
-  time: String!
   url: String
   user: User!
 }
@@ -67,7 +67,7 @@ type Mutation {
 
   """Logout"""
   logout: User
-  newRoomMessage(room: String, text: String, time: String, url: String): Message!
+  newRoomMessage(room: ID, text: String, url: String): Message!
 
   """Register"""
   register(email: String, name: String, password: String): User!
@@ -97,7 +97,7 @@ type Query {
 
   """Get Logged In User"""
   getMe: User!
-  getMessagesInRoom(room: String): [Message!]!
+  getMessagesInRoom(room: ID): [Message!]!
 
   """Get Single Question"""
   question(id: ID): Question
@@ -136,12 +136,14 @@ type Room {
   _id: ID!
   createdAt: String!
   description: String!
+  messages: [Message!]
   title: String!
+  users: [User!]
 }
 
 type Subscription {
   count: Int
-  newRoomMessage(room: String): Message!
+  newRoomMessage(room: ID): Message!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -153,6 +155,7 @@ type User {
   comments: [Comment!]
   createdAt: String!
   email: String!
+  messages: [Message!]
   name: String!
   password: String
   questions: [Question!]

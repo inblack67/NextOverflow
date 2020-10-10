@@ -2,6 +2,7 @@ import { objectType } from '@nexus/schema';
 import { Answer } from './Answer';
 import { Comment } from './Comment';
 import { Question } from './Question';
+import { Message } from './Message';
 
 export const User = objectType({
     name: 'User',
@@ -9,6 +10,10 @@ export const User = objectType({
         t.string('name');
         t.string('email');
         t.string('password', { nullable: true });
+        t.list.field('messages', {
+            type: Message,
+            nullable: true
+        });
         t.list.field('questions', {
             type: Question,
             nullable: true

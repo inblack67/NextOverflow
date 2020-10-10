@@ -12,7 +12,6 @@ import UserModel from '../../models/User';
 import AnswerModel from '../../models/Answer';
 import CommentModel from '../../models/Comment';
 import RoomModel from '../../models/Room';
-import { onMessageUpdates, subscribers } from '../subscriptionHelpers';
 import { Message } from './Message';
 import MessageModel from '../../models/Message';
 
@@ -20,14 +19,14 @@ export const Query = queryType({
 	definition(t) {
 		t.list.field('getMessagesInRoom', {
 			type: Message,
-			args: { room: stringArg() },
+			args: { room: idArg() },
 			resolve: asyncHandler(async (parent, { room }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 
-				const messages = await MessageModel.find({ room }).populate('user');
+				const messages = await MessageModel.find({ room }).populate([ 'user', 'room' ]);
 
 				return messages;
 			}),
@@ -97,7 +96,7 @@ export const Query = queryType({
 			},
 			nullable: true,
 			resolve: asyncHandler(async (_, { id }) => {
-				const room = await RoomModel.findById(id);
+				const room = await RoomModel.findById(id).populate(['users', 'messages']);
 				if (!room) {
 					throw new ErrorResponse('Resource not found', 404);
 				}
@@ -109,7 +108,7 @@ export const Query = queryType({
 			type: Room,
 			description: 'Get All Rooms',
 			resolve: asyncHandler(async () => {
-				const rooms = await RoomModel.find();
+				const rooms = await RoomModel.find().populate(['users', 'messages']);
 				return rooms;
 			}),
 		});

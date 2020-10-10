@@ -17,7 +17,6 @@ import asyncHandler from '../../middlewares/asyncHandler';
 import ErrorResponse from '../errorResponse';
 import { isProtected } from '../../src/isAuthenticated';
 import { GraphQLUpload } from 'graphql-upload';
-import { onMessageUpdates, subscribers } from '../subscriptionHelpers';
 import { NEW_ROOM_MESSAGE, CHANNEL_NAME } from '../subscriptionTypes';
 
 export const Mutation = mutationType({
@@ -26,15 +25,20 @@ export const Mutation = mutationType({
 
 		t.field('newRoomMessage', {
 			type: Message,
-			args: { room: stringArg(), text: stringArg(), time: stringArg(), url: stringArg({ nullable: true }) },
+			args: { room: idArg(), text: stringArg(), url: stringArg({ nullable: true }) },
 			resolve: asyncHandler(async (parent, args, ctx) => {
-				await MessageModel.deleteMany();
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 
-				const body = { room: args.room, time: args.time, text: args.text, user: ctx.req.user._id };
+				const room = await RoomModel.findById(args.room).populate('user');
+
+				if (!room) {
+					throw new ErrorResponse('Resource not found', 404);
+				}
+
+				const body = { room: args.room, text: args.text, user: ctx.req.user._id };
 
 				if (args.url) {
 					body.url = args.url;
@@ -42,10 +46,10 @@ export const Mutation = mutationType({
 
 				const newMessage = await MessageModel.create(body);
 
-				const message = await MessageModel.findById(newMessage._id).populate('user');
+				const message = await MessageModel.findById(newMessage._id).populate([ 'user', 'room' ]);
 
 				ctx.pubsub.publish(NEW_ROOM_MESSAGE, {
-					room: args.room,
+					room,
 					newRoomMessage: message,
 				});
 
@@ -62,13 +66,13 @@ export const Mutation = mutationType({
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 
-				const message = await MessageModel.findById(id).populate('user');
+				const message = await MessageModel.findById(id).populate([ 'user', 'room' ]);
 
 				if (message.user._id.toString() !== ctx.req.user._id.toString()) {
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 
-				const deletedMessage = await MessageModel.findByIdAndDelete(message._id).populate('user');
+				const deletedMessage = await MessageModel.findByIdAndDelete(message._id).populate([ 'user', 'room' ]);
 
 				return deletedMessage;
 			}),
@@ -123,7 +127,8 @@ export const Mutation = mutationType({
 					title,
 					description,
 				});
-				return newRoom;
+				const room = await RoomModel.findById(newRoom._id).populate(['users', 'messages'])
+				return room;
 			}),
 		});
 
@@ -226,7 +231,7 @@ export const Mutation = mutationType({
 				description: stringArg({ nullable: true }),
 			},
 			resolve: asyncHandler(async (parent, args, ctx) => {
-				const room = await RoomModel.findById(args.id);
+				const room = await RoomModel.findById(args.id).populate(['users', 'messages']);
 
 				if (!room) {
 					throw new ErrorResponse('Resource not found', 404);
@@ -242,7 +247,7 @@ export const Mutation = mutationType({
 					body.description = args.description;
 				}
 
-				const updatedRoom = await RoomModel.findByIdAndUpdate(args.id, body, { new: true });
+				const updatedRoom = await RoomModel.findByIdAndUpdate(args.id, body, { new: true }).populate(['users', 'messages']);
 				return updatedRoom;
 			}),
 		});
@@ -349,7 +354,7 @@ export const Mutation = mutationType({
 			nullable: true,
 			args: { id: idArg() },
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
-				const room = await RoomModel.findById(id);
+				const room = await RoomModel.findById(id).populate(['users', 'messages']);
 
 				return await RoomModel.findByIdAndDelete(id);
 			}),

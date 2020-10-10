@@ -15,11 +15,11 @@ export const Subscription = subscriptionType({
 	definition(t) {
 		t.field('newRoomMessage', {
 			type: Message,
-			args: { room: stringArg() },
+			args: { room: idArg() },
 			subscribe: asyncHandler(
 				withFilter(
 					(_, args, { pubsub }) => pubsub.asyncIterator(NEW_ROOM_MESSAGE),
-					(payload, args) => payload.room === args.room,
+					(payload, args) => payload.room._id.toString() === args.room.toString(),
 				),
 			),
 		});

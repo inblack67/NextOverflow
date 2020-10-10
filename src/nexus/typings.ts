@@ -54,8 +54,8 @@ export interface NexusGenRootTypes {
   Message: { // root type
     _id: string; // ID!
     createdAt: string; // String!
+    room: NexusGenRootTypes['Room']; // Room!
     text: string; // String!
-    time: string; // String!
     url?: string | null; // String
     user: NexusGenRootTypes['User']; // User!
   }
@@ -75,7 +75,9 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     createdAt: string; // String!
     description: string; // String!
+    messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
+    users?: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Subscription: { // root type
     count?: number | null; // Int
@@ -87,6 +89,7 @@ export interface NexusGenRootTypes {
     comments?: NexusGenRootTypes['Comment'][] | null; // [Comment!]
     createdAt: string; // String!
     email: string; // String!
+    messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password?: string | null; // String
     questions?: NexusGenRootTypes['Question'][] | null; // [Question!]
@@ -128,8 +131,8 @@ export interface NexusGenFieldTypes {
   Message: { // field return type
     _id: string; // ID!
     createdAt: string; // String!
+    room: NexusGenRootTypes['Room']; // Room!
     text: string; // String!
-    time: string; // String!
     url: string | null; // String
     user: NexusGenRootTypes['User']; // User!
   }
@@ -180,7 +183,9 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     createdAt: string; // String!
     description: string; // String!
+    messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
+    users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Subscription: { // field return type
     count: number | null; // Int
@@ -192,6 +197,7 @@ export interface NexusGenFieldTypes {
     comments: NexusGenRootTypes['Comment'][] | null; // [Comment!]
     createdAt: string; // String!
     email: string; // String!
+    messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password: string | null; // String
     questions: NexusGenRootTypes['Question'][] | null; // [Question!]
@@ -237,9 +243,8 @@ export interface NexusGenArgTypes {
       password?: string | null; // String
     }
     newRoomMessage: { // args
-      room?: string | null; // String
+      room?: string | null; // ID
       text?: string | null; // String
-      time?: string | null; // String
       url?: string | null; // String
     }
     register: { // args
@@ -278,7 +283,7 @@ export interface NexusGenArgTypes {
       id?: string | null; // ID
     }
     getMessagesInRoom: { // args
-      room?: string | null; // String
+      room?: string | null; // ID
     }
     question: { // args
       id?: string | null; // ID
@@ -295,7 +300,7 @@ export interface NexusGenArgTypes {
   }
   Subscription: {
     newRoomMessage: { // args
-      room?: string | null; // String
+      room?: string | null; // ID
     }
   }
 }

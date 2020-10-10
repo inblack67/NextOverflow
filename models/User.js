@@ -53,6 +53,13 @@ UserSchema.pre('remove', async function (next) {
   next();
 });
 
+UserSchema.virtual('messages', {
+  ref: 'Message',
+  localField: '_id',
+  foreignField: 'user',
+  justOne: false,
+});
+
 UserSchema.virtual('questions', {
   ref: 'Question',
   localField: '_id',

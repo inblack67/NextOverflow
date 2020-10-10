@@ -7,8 +7,9 @@ const MessageSchema = new Schema({
 		trim: true,
 	},
 	room: {
-		type: String,
-		required: [ true, 'Message Room is required' ],
+		type: Schema.ObjectId,
+		ref: 'Room',
+		required: [ true, 'Which room does this message belongs to?' ],
 	},
 	url: {
 		type: String,
@@ -19,10 +20,6 @@ const MessageSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User',
 		required: [ true, 'Who is the creator of this Message?' ],
-	},
-	time: {
-		type: String,
-		required: [ true, 'Message time is required' ],
 	},
 	createdAt: {
 		type: Date,
