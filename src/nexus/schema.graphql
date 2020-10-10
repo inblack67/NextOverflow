@@ -42,7 +42,6 @@ type Mutation {
 
   """Add Comment"""
   addComment(content: String, question: ID): Comment!
-  addMessage(room: String, text: String, time: String, url: String): Message!
 
   """Add Question"""
   addQuestion(description: String, tags: String, title: String): Question!
@@ -68,6 +67,7 @@ type Mutation {
 
   """Logout"""
   logout: User
+  newRoomMessage(room: String, text: String, time: String, url: String): Message!
 
   """Register"""
   register(email: String, name: String, password: String): User!
@@ -97,6 +97,7 @@ type Query {
 
   """Get Logged In User"""
   getMe: User!
+  getMessagesInRoom(room: String): [Message!]!
 
   """Get Single Question"""
   question(id: ID): Question
@@ -140,7 +141,7 @@ type Room {
 
 type Subscription {
   count: Int
-  messages(room: String): [Message!]!
+  newRoomMessage(room: String): Message!
 }
 
 """The `Upload` scalar type represents a file upload."""

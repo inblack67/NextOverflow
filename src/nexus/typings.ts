@@ -79,7 +79,7 @@ export interface NexusGenRootTypes {
   }
   Subscription: { // root type
     count?: number | null; // Int
-    messages: NexusGenRootTypes['Message'][]; // [Message!]!
+    newRoomMessage: NexusGenRootTypes['Message']; // Message!
   }
   User: { // root type
     _id: string; // ID!
@@ -136,7 +136,6 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     addAnswer: NexusGenRootTypes['Answer']; // Answer!
     addComment: NexusGenRootTypes['Comment']; // Comment!
-    addMessage: NexusGenRootTypes['Message']; // Message!
     addQuestion: NexusGenRootTypes['Question']; // Question!
     addRoom: NexusGenRootTypes['Room']; // Room!
     deleteAnswer: NexusGenRootTypes['Answer'] | null; // Answer
@@ -146,6 +145,7 @@ export interface NexusGenFieldTypes {
     deleteRoom: NexusGenRootTypes['Room'] | null; // Room
     login: NexusGenRootTypes['User']; // User!
     logout: NexusGenRootTypes['User'] | null; // User
+    newRoomMessage: NexusGenRootTypes['Message']; // Message!
     register: NexusGenRootTypes['User']; // User!
     updateAnswer: NexusGenRootTypes['Answer'] | null; // Answer
     updateComment: NexusGenRootTypes['Comment'] | null; // Comment
@@ -157,6 +157,7 @@ export interface NexusGenFieldTypes {
     answer: NexusGenRootTypes['Answer'] | null; // Answer
     comment: NexusGenRootTypes['Comment'] | null; // Comment
     getMe: NexusGenRootTypes['User']; // User!
+    getMessagesInRoom: NexusGenRootTypes['Message'][]; // [Message!]!
     question: NexusGenRootTypes['Question'] | null; // Question
     questionAnswers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     questionComments: NexusGenRootTypes['Comment'][]; // [Comment!]!
@@ -183,7 +184,7 @@ export interface NexusGenFieldTypes {
   }
   Subscription: { // field return type
     count: number | null; // Int
-    messages: NexusGenRootTypes['Message'][]; // [Message!]!
+    newRoomMessage: NexusGenRootTypes['Message']; // Message!
   }
   User: { // field return type
     _id: string; // ID!
@@ -206,12 +207,6 @@ export interface NexusGenArgTypes {
     addComment: { // args
       content?: string | null; // String
       question?: string | null; // ID
-    }
-    addMessage: { // args
-      room?: string | null; // String
-      text?: string | null; // String
-      time?: string | null; // String
-      url?: string | null; // String
     }
     addQuestion: { // args
       description?: string | null; // String
@@ -240,6 +235,12 @@ export interface NexusGenArgTypes {
     login: { // args
       email?: string | null; // String
       password?: string | null; // String
+    }
+    newRoomMessage: { // args
+      room?: string | null; // String
+      text?: string | null; // String
+      time?: string | null; // String
+      url?: string | null; // String
     }
     register: { // args
       email?: string | null; // String
@@ -276,6 +277,9 @@ export interface NexusGenArgTypes {
     comment: { // args
       id?: string | null; // ID
     }
+    getMessagesInRoom: { // args
+      room?: string | null; // String
+    }
     question: { // args
       id?: string | null; // ID
     }
@@ -290,7 +294,7 @@ export interface NexusGenArgTypes {
     }
   }
   Subscription: {
-    messages: { // args
+    newRoomMessage: { // args
       room?: string | null; // String
     }
   }

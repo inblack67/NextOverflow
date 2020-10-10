@@ -6,36 +6,22 @@ import { Message } from './Message';
 import { isProtected } from '../isAuthenticated';
 import ErrorResponse from '../errorResponse';
 import asyncHandler from '../../middlewares/asyncHandler';
-import { onMessageUpdates, subscribers, getMessages } from '../subscriptionHelpers';
+import { withFilter } from 'graphql-subscriptions';
+import { NEW_ROOM_MESSAGE, CHANNEL_NAME } from '../subscriptionTypes';
 
 let count = 0;
-const CHANNEL_NAME = 'COUNT';
 
 export const Subscription = subscriptionType({
 	definition(t) {
-		t.list.field('messages', {
+		t.field('newRoomMessage', {
 			type: Message,
 			args: { room: stringArg() },
-			subscribe: asyncHandler(async (parent, args, { pubsub }) => {
-				const messages = await getMessages();
-				console.log(messages);
-
-				onMessageUpdates(() =>
-					pubsub.publish(args.room, {
-						messages,
-					}),
-				);
-
-				setTimeout(
-					() =>
-						pubsub.publish(args.room, {
-							messages,
-						}),
-					0,
-				);
-
-				return pubsub.asyncIterator(args.room);
-			}),
+			subscribe: asyncHandler(
+				withFilter(
+					(_, args, { pubsub }) => pubsub.asyncIterator(NEW_ROOM_MESSAGE),
+					(payload, args) => payload.room === args.room,
+				),
+			),
 		});
 
 		t.int('count', {

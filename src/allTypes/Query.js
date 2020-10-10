@@ -1,4 +1,4 @@
-import { queryType, idArg } from '@nexus/schema';
+import { queryType, idArg, stringArg } from '@nexus/schema';
 import QuestionModel from '../../models/Question';
 import { isProtected } from '../isAuthenticated';
 import ErrorResponse from '../errorResponse';
@@ -12,9 +12,27 @@ import UserModel from '../../models/User';
 import AnswerModel from '../../models/Answer';
 import CommentModel from '../../models/Comment';
 import RoomModel from '../../models/Room';
+import { onMessageUpdates, subscribers } from '../subscriptionHelpers';
+import { Message } from './Message';
+import MessageModel from '../../models/Message';
 
 export const Query = queryType({
 	definition(t) {
+		t.list.field('getMessagesInRoom', {
+			type: Message,
+			args: { room: stringArg() },
+			resolve: asyncHandler(async (parent, { room }, ctx) => {
+				const isAuthenticated = await isProtected(ctx);
+				if (!isAuthenticated) {
+					throw new ErrorResponse('Not Authorized', 401);
+				}
+
+				const messages = await MessageModel.find({ room }).populate('user');
+
+				return messages;
+			}),
+		});
+
 		t.list.field('questionComments', {
 			type: Comment,
 			description: 'Get All Comments Of A Question',

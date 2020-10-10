@@ -10,20 +10,21 @@ import { Question } from './Question';
 import { Answer } from './Answer';
 import { Room } from './Room';
 import { Message } from './Message';
+import MessageModel from '../../models/Message';
 import { Comment } from './Comment';
 import { serialize } from 'cookie';
 import asyncHandler from '../../middlewares/asyncHandler';
 import ErrorResponse from '../errorResponse';
 import { isProtected } from '../../src/isAuthenticated';
 import { GraphQLUpload } from 'graphql-upload';
-import MessageModel from '../../models/Message';
 import { onMessageUpdates, subscribers } from '../subscriptionHelpers';
+import { NEW_ROOM_MESSAGE, CHANNEL_NAME } from '../subscriptionTypes';
 
 export const Mutation = mutationType({
 	definition(t) {
 		t.typeName = 'Mutations';
 
-		t.field('addMessage', {
+		t.field('newRoomMessage', {
 			type: Message,
 			args: { room: stringArg(), text: stringArg(), time: stringArg(), url: stringArg({ nullable: true }) },
 			resolve: asyncHandler(async (parent, args, ctx) => {
@@ -43,7 +44,10 @@ export const Mutation = mutationType({
 
 				const message = await MessageModel.findById(newMessage._id).populate('user');
 
-				subscribers.forEach((fn) => fn());
+				ctx.pubsub.publish(NEW_ROOM_MESSAGE, {
+					room: args.room,
+					newRoomMessage: message,
+				});
 
 				return message;
 			}),
