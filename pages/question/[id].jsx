@@ -5,6 +5,8 @@ import Preloader from '../../components/Preloader';
 import { RenderMarkdown } from 'use-syntaxer';
 import Answers from '../../components/Answers';
 import AddAnswer from '../../components/AddAnswer';
+import Comments from '../../components/Comments';
+import AddComment from '../../components/AddComment';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -37,10 +39,16 @@ const SingleQuestion = () => {
 				</div>
 			</div>
 			<div>
-				<p className='flow-text red-text center'>Answers</p>
 				<Answers question={id} />
 				<AddAnswer question={id} />
+				<Comments question={id} />
+				<AddComment question={id} />
 			</div>
+			<div
+				style={{
+					height: '10rem',
+				}}
+			/>
 		</div>
 	);
 };

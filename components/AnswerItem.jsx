@@ -4,7 +4,7 @@ import { RenderMarkdown } from 'use-syntaxer';
 const AnswerItem = ({ answer: { content, user: { name } } }) => {
 	return (
 		<div className='col s12 m6 l6'>
-			<div className='card black'>
+			<div className='card grey darken-4'>
 				<div className='card-content'>
 					<RenderMarkdown code={content} />
 				</div>

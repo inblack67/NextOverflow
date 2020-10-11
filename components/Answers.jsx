@@ -17,8 +17,9 @@ const Answers = ({ question }) => {
 
 	return (
 		<div>
+			<p className='flow-text red-text center'>Answers</p>
 			{data &&
-				data.questionAnswers &&
+				data.questionAnswers && data.questionAnswers.length > 0 &&
 				data.questionAnswers.map((answer) => <AnswerItem key={answer._id} answer={answer} />)}
 		</div>
 	);

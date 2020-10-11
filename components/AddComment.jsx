@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
-import { addAnswerMutation, fetchAllAnswersQuery } from '../src/queries/answers';
+import { addCommentMutation, fetchAllCommentsQuery } from '../src/queries/comments';
 import Preloader from './Preloader';
 import PropTypes from 'prop-types';
 
-const AddAnswer = ({ question }) => {
+const AddComment = ({ question }) => {
 	const [ submitting, setSubmitting ] = useState(false);
 
 	const { register, handleSubmit, errors } = useForm({
 		defaultValues: {
-			answer: 'Why Not?',
+			comment: 'Why Not?',
 		},
 	});
 
-	const [ addAnswer, { loading, data } ] = useMutation(addAnswerMutation, {
+	const [ addComment, { loading, data } ] = useMutation(addCommentMutation, {
 		refetchQueries: [
 			{
-				query: fetchAllAnswersQuery,
+				query: fetchAllCommentsQuery,
 				variables: {
 					question,
 				},
@@ -25,16 +25,17 @@ const AddAnswer = ({ question }) => {
 		],
 	});
 
-	const onSubmit = ({ answer }) => {
+	const onSubmit = ({ comment }) => {
 		setSubmitting(true);
-		addAnswer({
+		console.log(comment);
+		addComment({
 			variables: {
 				question,
-				content: answer,
+				content: comment,
 			},
 		})
 			.then(() => {
-				M.toast({ html: 'Question Answered!' });
+				M.toast({ html: 'Comment Posted!' });
 			})
 			.catch((err) => {
 				M.toast({ html: err });
@@ -49,23 +50,23 @@ const AddAnswer = ({ question }) => {
 
 	return (
 		<div className='container'>
-			<p className='flow-text center'>Add Your Answer</p>
+			<p className='flow-text center'>Post Your Comment</p>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='input-field'>
 					<textarea
-						name='answer'
-						id='answer'
+						name='comment'
+						id='comment'
 						className='materialize-textarea'
 						ref={register({
 							required: 'Required!',
 						})}
 					/>
-					<label htmlFor='answer'>Answer</label>
-					{errors.answer ? (
-						<span className='helper-text red-text'>{errors.answer.message}</span>
+					<label htmlFor='comment'>Comment</label>
+					{errors.comment ? (
+						<span className='helper-text red-text'>{errors.comment.message}</span>
 					) : (
 						<span className='helper-text white-text'>
-							Answer <span className='red-text'>(Don't think, show off your markdown skills.)</span>
+							Comment <span className='red-text'>(Don't do markdown here.)</span>
 						</span>
 					)}
 				</div>
@@ -79,8 +80,8 @@ const AddAnswer = ({ question }) => {
 	);
 };
 
-AddAnswer.propTypes = {
+AddComment.propTypes = {
 	question: PropTypes.string.isRequired,
 };
 
-export default AddAnswer;
+export default AddComment;
