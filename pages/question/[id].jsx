@@ -7,7 +7,7 @@ import Answers from '../../components/Answers';
 import AddAnswer from '../../components/AddAnswer';
 import Comments from '../../components/Comments';
 import AddComment from '../../components/AddComment';
-import Moment from 'react-moment';
+import FormatDate from '../../components/FormatDate';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -36,7 +36,7 @@ const SingleQuestion = () => {
 						~ <span className='grey-text'>{question.user.name}</span>
 					</p>
 					<p className='blue-text'>
-						<Moment format='MMMM Do YYYY' date={new Date(parseInt(question.createdAt, 10))} />
+						<FormatDate createdAt={question.createdAt} />
 					</p>
 				</div>
 				<div className='card-action'>

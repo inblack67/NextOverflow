@@ -154,6 +154,7 @@ export interface NexusGenFieldTypes {
     questions: NexusGenRootTypes['Question'][]; // [Question!]!
     room: NexusGenRootTypes['Room'] | null; // Room
     rooms: NexusGenRootTypes['Room'][]; // [Room!]!
+    user: NexusGenRootTypes['User']; // User!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Question: { // field return type
@@ -283,6 +284,9 @@ export interface NexusGenArgTypes {
       question?: string | null; // ID
     }
     room: { // args
+      id?: string | null; // ID
+    }
+    user: { // args
       id?: string | null; // ID
     }
   }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { RenderMarkdown } from 'use-syntaxer';
-import Moment from 'react-moment';
+import FormatDate from './FormatDate';
 
 const AnswerItem = ({ answer: { content, createdAt, user: { name } } }) => {
 	return (
@@ -12,7 +12,7 @@ const AnswerItem = ({ answer: { content, createdAt, user: { name } } }) => {
 				<div className='card-action'>
 					<a href='#!'>{name}</a>
 					<a className='blue-text'>
-						<Moment format='MMMM Do YYYY' date={new Date(parseInt(createdAt, 10))} />
+						<FormatDate createdAt={createdAt} />
 					</a>
 				</div>
 			</div>

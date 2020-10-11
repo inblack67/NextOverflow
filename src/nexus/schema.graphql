@@ -110,6 +110,9 @@ type Query {
   """Get All Rooms"""
   rooms: [Room!]!
 
+  """GET Single User"""
+  user(id: ID): User!
+
   """GET All Users"""
   users: [User!]!
 }

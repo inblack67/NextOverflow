@@ -13,20 +13,23 @@ const devs = () => {
 	}
 
 	return (
-		<div>
-			{data &&
-				(data.users ? (
-					data.users.map((user) => <DevItem user={user} key={user._id} />)
-				) : (
-					<Fragment>
-						<div className='center'>
-							<p className='flow-text'>No Devs Registered Yet.</p>
-							<Link href='/register'>
-								<a className='btn red pulse'>Register</a>
-							</Link>
-						</div>
-					</Fragment>
-				))}
+		<div className='container'>
+			<p className='flow-text center red-text'>Devs</p>
+			<div className='row'>
+				{data &&
+					(data.users ? (
+						data.users.map((user) => <DevItem user={user} key={user._id} />)
+					) : (
+						<Fragment>
+							<div className='center'>
+								<p className='flow-text'>No Devs Registered Yet.</p>
+								<Link href='/register'>
+									<a className='btn red pulse'>Register</a>
+								</Link>
+							</div>
+						</Fragment>
+					))}
+			</div>
 		</div>
 	);
 };

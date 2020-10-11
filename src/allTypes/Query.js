@@ -154,6 +154,22 @@ export const Query = queryType({
 			}),
 		});
 
+		t.field('user', {
+			type: User,
+			description: 'GET Single User',
+			args: { id: idArg() },
+			resolve: asyncHandler(async (parent, { id }, ctx) => {
+				const isAuthenticated = await isProtected(ctx);
+
+				if (!isAuthenticated) {
+					throw new ErrorResponse('Not Authenticated', 401);
+				}
+
+				const user = await UserModel.findById(id).populate([ 'questions', 'answers', 'comments' ]);
+				return user;
+			}),
+		});
+
 		t.list.field('users', {
 			type: User,
 			description: 'GET All Users',

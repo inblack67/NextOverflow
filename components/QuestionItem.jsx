@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { getMeQuery } from '../src/queries/auth';
 import { deleteQuestionMutation, fetchAllQuestionsQuery } from '../src/queries/questions';
 import Preloader from './Preloader';
-import Moment from 'react-moment';
+import FormatDate from './FormatDate';
 
 const QuestionItem = ({ question: { title, createdAt, tags, description, _id, user: { name }, user } }) => {
 	const { loading, data } = useQuery(getMeQuery);
@@ -44,7 +44,7 @@ const QuestionItem = ({ question: { title, createdAt, tags, description, _id, us
 						~ <span className='grey-text'>{name}</span>
 					</p>
 					<p className='blue-text'>
-						<Moment format='MMMM Do YYYY' date={new Date(parseInt(createdAt, 10))} />
+						<FormatDate createdAt={createdAt} />
 					</p>
 				</div>
 				<div className='card-action'>

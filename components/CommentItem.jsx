@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { RenderMarkdown } from 'use-syntaxer';
-import Moment from 'react-moment';
+import FormatDate from './FormatDate';
 
 const CommentItem = ({ comment: { createdAt, content, user: { name } } }) => {
 	return (
@@ -9,7 +8,7 @@ const CommentItem = ({ comment: { createdAt, content, user: { name } } }) => {
 				<div className='card-content'>
 					<div className='card-title red-text'>{name}</div>
 					<p className='blue-text'>
-						<Moment format='MMMM Do YYYY' date={new Date(parseInt(createdAt, 10))} />
+						<FormatDate createdAt={createdAt} />
 					</p>
 					<br/>
 					<p>{content}</p>
