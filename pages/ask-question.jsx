@@ -116,18 +116,4 @@ const AskQuestion = () => {
 	);
 };
 
-export const getServerSideProps = async (ctx) => {
-	const cookie = ctx.req.headers.cookie;
-	const isAuth = await isProtected(ctx, cookie);
-	console.log(isAuth);
-	// const apolloClient = initializeApollo();
-	// const res = await apolloClient.query({
-	// 	query: fetchAllQuestionsQuery,
-	// });
-	// console.log(res.data);
-	return {
-		props: {},
-	};
-};
-
 export default AskQuestion;

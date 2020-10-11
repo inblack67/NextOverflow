@@ -51,7 +51,7 @@ const QuestionItem = ({ question: { title, createdAt, tags, description, _id, us
 					<Link href='/question/[id]' as={`/question/${_id}`}>
 						<a>Explore</a>
 					</Link>
-					{data && data.getMe._id.toString() === user._id.toString() ? (
+					{data.getMe._id === user._id ? (
 						<a href='#!' className='secondary-content' onClick={onDelete}>
 							Delete
 						</a>
