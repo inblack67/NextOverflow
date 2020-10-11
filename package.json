@@ -13,6 +13,7 @@
     "apollo-server-micro": "^2.16.1",
     "apollo-upload-client": "^14.1.1",
     "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
     "cookie": "^0.4.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -21,7 +22,6 @@
     "graphql-scalars": "^1.2.6",
     "graphql-subscriptions": "^1.1.0",
     "graphql-upload": "^11.0.0",
-    "gray-matter": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.3",
     "next": "9.5.2",
@@ -29,9 +29,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hook-form": "^6.7.2",
-    "subscriptions-transport-ws": "^0.9.18"
+    "subscriptions-transport-ws": "^0.9.18",
+    "use-syntaxer": "^0.1.2"
   },
-  "devDependencies": {
-    "colors": "^1.4.0"
-  }
+  "devDependencies": {}
 }

@@ -28,7 +28,7 @@ export const Query = queryType({
 
 				const messages = await MessageModel.find({ room }).populate([ 'user', 'room' ]);
 
-				return messages;
+				return messages.reverse();
 			}),
 		});
 
@@ -40,7 +40,7 @@ export const Query = queryType({
 			},
 			resolve: asyncHandler(async (_, { question }) => {
 				const comments = await CommentModel.find({ question }).populate([ 'user', 'question' ]);
-				return comments;
+				return comments.reverse();
 			}),
 		});
 
@@ -52,7 +52,7 @@ export const Query = queryType({
 			},
 			resolve: asyncHandler(async (_, { question }) => {
 				const answers = await AnswerModel.find({ question }).populate([ 'user', 'question' ]);
-				return answers;
+				return answers.reverse();
 			}),
 		});
 
@@ -113,7 +113,7 @@ export const Query = queryType({
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 				const rooms = await RoomModel.find().populate([ 'users', 'messages' ]);
-				return rooms;
+				return rooms.reverse();
 			}),
 		});
 
@@ -138,7 +138,7 @@ export const Query = queryType({
 			description: 'Get All Questions',
 			resolve: asyncHandler(async () => {
 				const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
-				return questions;
+				return questions.reverse();
 			}),
 		});
 
