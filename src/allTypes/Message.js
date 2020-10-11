@@ -16,6 +16,6 @@ export const Message = objectType({
 		t.field('user', {
 			type: User,
 		});
-		t.string('createdAt');
+		t.float('createdAt');
 	},
 });

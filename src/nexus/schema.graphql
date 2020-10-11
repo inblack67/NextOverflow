@@ -5,7 +5,7 @@
 type Answer {
   _id: ID!
   content: String!
-  createdAt: String!
+  createdAt: Float!
   question: Question!
   user: User!
 }
@@ -13,14 +13,14 @@ type Answer {
 type Comment {
   _id: ID!
   content: String!
-  createdAt: String!
+  createdAt: Float!
   question: Question!
   user: User!
 }
 
 type Message {
   _id: ID!
-  createdAt: String!
+  createdAt: Float!
   file: String
   image: String
   room: Room!
@@ -118,7 +118,7 @@ type Question {
   _id: ID!
   answers: [Answer!]!
   comments: [Comment!]!
-  createdAt: String!
+  createdAt: Float!
   description: String!
   tags: String!
   title: String!
@@ -127,7 +127,7 @@ type Question {
 
 type Room {
   _id: ID!
-  createdAt: String!
+  createdAt: Float!
   description: String!
   messages: [Message!]
   title: String!
@@ -143,9 +143,9 @@ type User {
   _id: ID!
   answers: [Answer!]
   comments: [Comment!]
-  createdAt: String!
+  createdAt: Float!
   email: String!
-  image: String
+  image: String!
   messages: [Message!]
   name: String!
   password: String

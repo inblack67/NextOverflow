@@ -24,6 +24,7 @@ const UserSchema = new Schema(
 		image: {
 			type: String,
 			trim: true,
+			required: [ true, 'Image is required' ],
 		},
 		createdAt: {
 			type: Date,

@@ -9,7 +9,7 @@ export const User = objectType({
 	definition(t) {
 		t.string('name');
 		t.string('email');
-		t.string('image', { nullable: true });
+		t.string('image');
 		t.string('password', { nullable: true });
 		t.list.field('messages', {
 			type: Message,
@@ -27,7 +27,7 @@ export const User = objectType({
 			type: Comment,
 			nullable: true,
 		});
-		t.string('createdAt');
 		t.id('_id');
+		t.float('createdAt');
 	},
 });

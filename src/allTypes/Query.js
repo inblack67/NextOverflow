@@ -164,7 +164,7 @@ export const Query = queryType({
 					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
-				const users = await UserModel.find().populate([ 'questions', 'answers' ]);
+				const users = await UserModel.find().populate([ 'questions', 'answers', 'comments' ]);
 				return users;
 			}),
 		});

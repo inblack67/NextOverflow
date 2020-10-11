@@ -31,20 +31,20 @@ export interface NexusGenRootTypes {
   Answer: { // root type
     _id: string; // ID!
     content: string; // String!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Comment: { // root type
     _id: string; // ID!
     content: string; // String!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // root type
     _id: string; // ID!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     file?: string | null; // String
     image?: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
@@ -58,7 +58,7 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     description: string; // String!
     tags: string; // String!
     title: string; // String!
@@ -66,7 +66,7 @@ export interface NexusGenRootTypes {
   }
   Room: { // root type
     _id: string; // ID!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     description: string; // String!
     messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
@@ -80,9 +80,9 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     answers?: NexusGenRootTypes['Answer'][] | null; // [Answer!]
     comments?: NexusGenRootTypes['Comment'][] | null; // [Comment!]
-    createdAt: string; // String!
+    createdAt: number; // Float!
     email: string; // String!
-    image?: string | null; // String
+    image: string; // String!
     messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password?: string | null; // String
@@ -102,20 +102,20 @@ export interface NexusGenFieldTypes {
   Answer: { // field return type
     _id: string; // ID!
     content: string; // String!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Comment: { // field return type
     _id: string; // ID!
     content: string; // String!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // field return type
     _id: string; // ID!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     file: string | null; // String
     image: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
@@ -160,7 +160,7 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     description: string; // String!
     tags: string; // String!
     title: string; // String!
@@ -168,7 +168,7 @@ export interface NexusGenFieldTypes {
   }
   Room: { // field return type
     _id: string; // ID!
-    createdAt: string; // String!
+    createdAt: number; // Float!
     description: string; // String!
     messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
@@ -182,9 +182,9 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][] | null; // [Answer!]
     comments: NexusGenRootTypes['Comment'][] | null; // [Comment!]
-    createdAt: string; // String!
+    createdAt: number; // Float!
     email: string; // String!
-    image: string | null; // String
+    image: string; // String!
     messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     name: string; // String!
     password: string | null; // String
