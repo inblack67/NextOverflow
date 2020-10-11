@@ -8,6 +8,7 @@ export const fetchAllAnswersQuery = gql`
 			user {
 				name
 			}
+			createdAt
 		}
 	}
 `;
@@ -44,6 +45,7 @@ export const fetchSingleAnswerQuery = gql`
 			user {
 				name
 			}
+			createdAt
 		}
 	}
 `;

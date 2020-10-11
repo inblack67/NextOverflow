@@ -7,6 +7,7 @@ import Answers from '../../components/Answers';
 import AddAnswer from '../../components/AddAnswer';
 import Comments from '../../components/Comments';
 import AddComment from '../../components/AddComment';
+import Moment from 'react-moment';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -26,12 +27,16 @@ const SingleQuestion = () => {
 
 	return (
 		<div className='container'>
+			<p className='flow-text center red-text'>Question</p>
 			<div className='card grey darken-4'>
 				<div className='card-content'>
 					<span className='card-title'>{question.title}</span>
 					<RenderMarkdown code={question.description} />
 					<p>
 						~ <span className='grey-text'>{question.user.name}</span>
+					</p>
+					<p className='blue-text'>
+						<Moment format='MMMM Do YYYY' date={new Date(parseInt(question.createdAt, 10))} />
 					</p>
 				</div>
 				<div className='card-action'>

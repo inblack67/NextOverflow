@@ -11,6 +11,7 @@ export const fetchAllQuestionsQuery = gql`
 				name
 				_id
 			}
+			createdAt
 		}
 	}
 `;
@@ -41,6 +42,7 @@ export const fetchSingleQuestionQuery = gql`
 			user {
 				name
 			}
+			createdAt
 		}
 	}
 `;

@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { addQuestionMutation, fetchAllQuestionsQuery } from '../src/queries/questions';
+import { getMeQuery } from '../src/queries/auth';
 import Router from 'next/router';
 import Preloader from '../components/Preloader';
+import { initializeApollo } from '../src/apollo';
+import { isProtected } from '../src/isAuthenticated';
 
 const AskQuestion = () => {
 	const [ submitting, setSubmitting ] = useState(false);
@@ -111,6 +114,20 @@ const AskQuestion = () => {
 			</form>
 		</div>
 	);
+};
+
+export const getServerSideProps = async (ctx) => {
+	const cookie = ctx.req.headers.cookie;
+	const isAuth = await isProtected(ctx, cookie);
+	console.log(isAuth);
+	// const apolloClient = initializeApollo();
+	// const res = await apolloClient.query({
+	// 	query: fetchAllQuestionsQuery,
+	// });
+	// console.log(res.data);
+	return {
+		props: {},
+	};
 };
 
 export default AskQuestion;

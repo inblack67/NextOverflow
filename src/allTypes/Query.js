@@ -23,7 +23,7 @@ export const Query = queryType({
 			resolve: asyncHandler(async (parent, { room }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const messages = await MessageModel.find({ room }).populate([ 'user', 'room' ]);
@@ -110,7 +110,7 @@ export const Query = queryType({
 			resolve: asyncHandler(async () => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 				const rooms = await RoomModel.find().populate([ 'users', 'messages' ]);
 				return rooms.reverse();
@@ -148,7 +148,7 @@ export const Query = queryType({
 			resolve: asyncHandler(async (parent, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 				return ctx.req.user;
 			}),
@@ -161,7 +161,7 @@ export const Query = queryType({
 				const isAuthenticated = await isProtected(ctx);
 
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const users = await UserModel.find().populate([ 'questions', 'answers' ]);

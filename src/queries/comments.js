@@ -8,6 +8,7 @@ export const fetchAllCommentsQuery = gql`
 			user {
 				name
 			}
+			createdAt
 		}
 	}
 `;
@@ -44,6 +45,7 @@ export const fetchSingleCommentQuery = gql`
 			user {
 				name
 			}
+			createdAt
 		}
 	}
 `;

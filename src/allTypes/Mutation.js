@@ -28,7 +28,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const room = await RoomModel.findById(args.room).populate('user');
@@ -70,7 +70,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const message = await MessageModel.findById(id).populate([ 'user', 'room' ]);
@@ -94,7 +94,7 @@ export const Mutation = mutationType({
 				const isAuthenticated = await isProtected(ctx);
 
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const user = await UserModel.findByIdAndUpdate(
@@ -118,7 +118,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (_, { content, question }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 				const createdComment = await CommentModel.create({ content, question, user: ctx.req.user._id });
 
@@ -133,7 +133,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (_, { content, question }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 				const createdAnswer = await AnswerModel.create({ content, question, user: ctx.req.user._id });
 				const newAnswer = await AnswerModel.findById(createdAnswer._id).populate([ 'user', 'question' ]);
@@ -162,7 +162,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (_, { title, description, tags }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 				const createdQuestion = await QuestionModel.create({
 					title,
@@ -183,7 +183,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const comment = await CommentModel.findById(args.id);
@@ -217,7 +217,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const answer = await AnswerModel.findById(args.id);
@@ -291,7 +291,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const question = await QuestionModel.findById(args.id);
@@ -333,7 +333,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const comment = await CommentModel.findById(id);
@@ -357,7 +357,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const answer = await AnswerModel.findById(id);
@@ -393,7 +393,7 @@ export const Mutation = mutationType({
 			resolve: asyncHandler(async (parent, { id }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 401);
+					throw new ErrorResponse('Not Authenticated', 401);
 				}
 
 				const question = await QuestionModel.findById(id);
@@ -461,7 +461,7 @@ export const Mutation = mutationType({
 				const isAuthenticated = await isProtected(ctx);
 
 				if (!isAuthenticated) {
-					throw new ErrorResponse('Not Authorized', 400);
+					throw new ErrorResponse('Not Authenticated', 400);
 				}
 
 				ctx.res.setHeader(
