@@ -5,9 +5,9 @@ import Link from 'next/link';
 const DevItem = ({ user: { name, image, createdAt, _id } }) => {
 	return (
 		<div className='col s12 m6 l6'>
-			<div className='card grey darken-4'>
+			<div className='card grey darken-4 medium'>
 				<div className='card-image'>
-					<img src={image} alt={name} />
+					<img src={image} alt={name} className='responsive-img' />
 					<span className='card-title'>{name}</span>
 				</div>
 				<div className='card-content'>

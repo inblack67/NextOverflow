@@ -7,6 +7,7 @@ export const fetchAllCommentsQuery = gql`
 			_id
 			user {
 				name
+				_id
 			}
 			createdAt
 		}
@@ -44,6 +45,7 @@ export const fetchSingleCommentQuery = gql`
 			_id
 			user {
 				name
+				_id
 			}
 			createdAt
 		}

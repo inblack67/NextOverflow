@@ -31,7 +31,7 @@ const SingleDev = () => {
 					<div>
 						<div className='card grey darken-4'>
 							<div className='card-image'>
-								<img src={image} alt={name} />
+								<img src={image} alt={name} className='responsive-img' />
 								<span className='card-title'>{name}</span>
 							</div>
 							<div className='card-content'>
@@ -48,6 +48,11 @@ const SingleDev = () => {
 								<a href='#!'>{comments.length} Comments</a>
 							</div>
 						</div>
+						<div
+							style={{
+								height: '10rem',
+							}}
+						/>
 					</div>
 				</Fragment>
 			)}

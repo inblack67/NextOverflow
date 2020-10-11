@@ -8,6 +8,7 @@ import AddAnswer from '../../components/AddAnswer';
 import Comments from '../../components/Comments';
 import AddComment from '../../components/AddComment';
 import FormatDate from '../../components/FormatDate';
+import { Fragment } from 'react';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -18,6 +19,8 @@ const SingleQuestion = () => {
 			id,
 		},
 	});
+
+	const onDelete = (e) => {};
 
 	if (loading) {
 		return <Preloader />;
@@ -41,6 +44,13 @@ const SingleQuestion = () => {
 				</div>
 				<div className='card-action'>
 					<a href='#!'>{question.tags}</a>
+					{question.user._id === question._id && (
+						<Fragment>
+							<a href='#!' onClick={onDelete} className='red-text'>
+								Delete
+							</a>
+						</Fragment>
+					)}
 				</div>
 			</div>
 			<div>

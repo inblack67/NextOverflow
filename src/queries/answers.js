@@ -7,6 +7,7 @@ export const fetchAllAnswersQuery = gql`
 			_id
 			user {
 				name
+				_id
 			}
 			createdAt
 		}
@@ -44,6 +45,7 @@ export const fetchSingleAnswerQuery = gql`
 			_id
 			user {
 				name
+				_id
 			}
 			createdAt
 		}

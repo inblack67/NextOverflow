@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 import { RenderMarkdown } from 'use-syntaxer';
 import FormatDate from './FormatDate';
 
-const AnswerItem = ({ answer: { content, createdAt, user: { name } } }) => {
+const AnswerItem = ({ answer: { content, _id, createdAt, user: { name }, user } }) => {
+	const onDelete = (e) => {};
+
 	return (
 		<div className='col s12 m6 l6'>
 			<div className='card grey darken-4'>
@@ -11,9 +14,16 @@ const AnswerItem = ({ answer: { content, createdAt, user: { name } } }) => {
 				</div>
 				<div className='card-action'>
 					<a href='#!'>{name}</a>
-					<a className='blue-text'>
+					<a href='#!' className='blue-text'>
 						<FormatDate createdAt={createdAt} />
 					</a>
+					{user._id === _id && (
+						<Fragment>
+							<a href='#!' onClick={onDelete} className='red-text'>
+								Delete
+							</a>
+						</Fragment>
+					)}
 				</div>
 			</div>
 		</div>
