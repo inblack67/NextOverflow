@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import { fetchSingleQuestionQuery } from '../../src/queries/questions';
 import Preloader from '../../components/Preloader';
 import { RenderMarkdown } from 'use-syntaxer';
+import Answers from '../../components/Answers';
+import AddAnswer from '../../components/AddAnswer';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -22,7 +24,7 @@ const SingleQuestion = () => {
 
 	return (
 		<div className='container'>
-			<div className='card grey darken-3'>
+			<div className='card grey darken-4'>
 				<div className='card-content'>
 					<span className='card-title'>{question.title}</span>
 					<RenderMarkdown code={question.description} />
@@ -33,6 +35,11 @@ const SingleQuestion = () => {
 				<div className='card-action'>
 					<a href='#!'>{question.tags}</a>
 				</div>
+			</div>
+			<div>
+				<p className='flow-text red-text center'>Answers</p>
+				<Answers question={id} />
+				<AddAnswer question={id} />
 			</div>
 		</div>
 	);
