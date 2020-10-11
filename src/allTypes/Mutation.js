@@ -486,15 +486,16 @@ export const Mutation = mutationType({
 				name: stringArg(),
 				email: stringArg(),
 				password: stringArg(),
+				image: stringArg(),
 			},
-			resolve: asyncHandler(async (parent, { name, email, password }, ctx) => {
+			resolve: asyncHandler(async (parent, { name, email, password, image }, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 
 				if (isAuthenticated) {
 					throw new ErrorResponse('Not Authorized', 400);
 				}
 
-				const user = await UserModel.create({ name, email, password });
+				const user = await UserModel.create({ name, email, password, image });
 				const token = user.getSignedJwtToken();
 				ctx.res.setHeader(
 					'Set-Cookie',
@@ -507,7 +508,13 @@ export const Mutation = mutationType({
 					}),
 				);
 
-				return { name: user.name, email: user.email, createdAt: user.createdAt, _id: user._id };
+				return {
+					name: user.name,
+					email: user.email,
+					createdAt: user.createdAt,
+					_id: user._id,
+					image: user.image,
+				};
 			}),
 		});
 	},

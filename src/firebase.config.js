@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import 'firebase/firestore';
-import 'colors';
 
 export const connectFB = () => {
 	const firebaseConfig = {
@@ -16,7 +15,6 @@ export const connectFB = () => {
 
 	if (!firebase.apps.length) {
 		firebase.initializeApp(firebaseConfig);
-		console.log(`Firebase is here`.blue.bold);
 	}
 
 	return firebase;
