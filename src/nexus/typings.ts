@@ -39,7 +39,7 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     content: string; // String!
     createdAt: string; // String!
-    question: string; // ID!
+    question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // root type
@@ -62,7 +62,7 @@ export interface NexusGenRootTypes {
     description: string; // String!
     tags: string; // String!
     title: string; // String!
-    user: NexusGenRootTypes['User']; // User!
+    user?: NexusGenRootTypes['User'] | null; // User
   }
   Room: { // root type
     _id: string; // ID!
@@ -110,7 +110,7 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     content: string; // String!
     createdAt: string; // String!
-    question: string; // ID!
+    question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // field return type
@@ -164,7 +164,7 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     tags: string; // String!
     title: string; // String!
-    user: NexusGenRootTypes['User']; // User!
+    user: NexusGenRootTypes['User'] | null; // User
   }
   Room: { // field return type
     _id: string; // ID!

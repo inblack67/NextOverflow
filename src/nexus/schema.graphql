@@ -14,7 +14,7 @@ type Comment {
   _id: ID!
   content: String!
   createdAt: String!
-  question: ID!
+  question: Question!
   user: User!
 }
 
@@ -122,7 +122,7 @@ type Question {
   description: String!
   tags: String!
   title: String!
-  user: User!
+  user: User
 }
 
 type Room {

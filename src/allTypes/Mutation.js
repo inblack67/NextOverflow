@@ -105,6 +105,8 @@ export const Mutation = mutationType({
 					},
 				).populate([ 'questions', 'answers', 'comments' ]);
 
+				console.log(user);
+
 				return user;
 			}),
 		});
@@ -119,7 +121,8 @@ export const Mutation = mutationType({
 					throw new ErrorResponse('Not Authorized', 401);
 				}
 				const createdComment = await CommentModel.create({ content, question, user: ctx.req.user._id });
-				const newComment = await CommentModel.findById(createdComment._id).populate([ 'user' ]);
+
+				const newComment = await CommentModel.findById(createdComment._id).populate([ 'user', 'question' ]);
 				return newComment;
 			}),
 		});

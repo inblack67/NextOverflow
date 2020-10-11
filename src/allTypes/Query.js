@@ -39,7 +39,7 @@ export const Query = queryType({
 				question: idArg(),
 			},
 			resolve: asyncHandler(async (_, { question }) => {
-				const comments = await CommentModel.find({ question }).populate([ 'user' ]);
+				const comments = await CommentModel.find({ question }).populate([ 'user', 'question' ]);
 				return comments;
 			}),
 		});
@@ -80,7 +80,7 @@ export const Query = queryType({
 			},
 			nullable: true,
 			resolve: asyncHandler(async (_, { id }) => {
-				const comment = await CommentModel.findById(id).populate([ 'user' ]);
+				const comment = await CommentModel.findById(id).populate([ 'user', 'question' ]);
 				if (!comment) {
 					throw new ErrorResponse('Resource not found', 404);
 				}
@@ -96,7 +96,7 @@ export const Query = queryType({
 			},
 			nullable: true,
 			resolve: asyncHandler(async (_, { id }) => {
-				const room = await RoomModel.findById(id).populate(['users', 'messages']);
+				const room = await RoomModel.findById(id).populate([ 'users', 'messages' ]);
 				if (!room) {
 					throw new ErrorResponse('Resource not found', 404);
 				}
@@ -108,7 +108,11 @@ export const Query = queryType({
 			type: Room,
 			description: 'Get All Rooms',
 			resolve: asyncHandler(async () => {
-				const rooms = await RoomModel.find().populate(['users', 'messages']);
+				const isAuthenticated = await isProtected(ctx);
+				if (!isAuthenticated) {
+					throw new ErrorResponse('Not Authorized', 401);
+				}
+				const rooms = await RoomModel.find().populate([ 'users', 'messages' ]);
 				return rooms;
 			}),
 		});
