@@ -14,6 +14,7 @@ const index = () => {
 
 	return (
 		<Fragment>
+			<IsAuthenticated />
 			<div className='container'>
 				<p className='flow-text center'>Questions</p>
 				<div className='row'>

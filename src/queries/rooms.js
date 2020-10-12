@@ -5,6 +5,8 @@ export const fetchAllRoomsQuery = gql`
 		rooms {
 			title
 			createdAt
+			_id
+			description
 		}
 	}
 `;
@@ -31,12 +33,14 @@ export const fetchSingleRoomQuery = gql`
 		room(id: $id) {
 			title
 			createdAt
+			_id
+			description
 		}
 	}
 `;
 
 export const updateRoomMutation = gql`
-	mutation ($id: ID!, description: String, $title: String){
+	mutation($id: ID!, $description: String, $title: String) {
 		updateRoom(id: $id, description: $description, title: $title) {
 			title
 			createdAt

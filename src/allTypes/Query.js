@@ -95,7 +95,11 @@ export const Query = queryType({
 				id: idArg(),
 			},
 			nullable: true,
-			resolve: asyncHandler(async (_, { id }) => {
+			resolve: asyncHandler(async (_, { id }, ctx) => {
+				const isAuthenticated = await isProtected(ctx);
+				if (!isAuthenticated) {
+					throw new ErrorResponse('Not Authenticated', 401);
+				}
 				const room = await RoomModel.findById(id).populate([ 'users', 'messages' ]);
 				if (!room) {
 					throw new ErrorResponse('Resource not found', 404);
@@ -107,7 +111,7 @@ export const Query = queryType({
 		t.list.field('rooms', {
 			type: Room,
 			description: 'Get All Rooms',
-			resolve: asyncHandler(async () => {
+			resolve: asyncHandler(async (_, args, ctx) => {
 				const isAuthenticated = await isProtected(ctx);
 				if (!isAuthenticated) {
 					throw new ErrorResponse('Not Authenticated', 401);
