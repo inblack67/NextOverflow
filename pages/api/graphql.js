@@ -5,6 +5,9 @@ import nextConnect from 'next-connect';
 import errorHandler from '../../middlewares/errorHandler';
 import { connectDB } from '../../src/connectDB';
 import cors from 'cors';
+import { isAuthWithToken } from '../../src/isAuthenticated';
+import { parse } from 'cookie';
+import ErrorResponse from '../../src/errorResponse';
 
 connectDB();
 
@@ -17,8 +20,22 @@ const apolloServer = new ApolloServer({
 	subscriptions: {
 		path: '/api/subscriptions',
 		keepAlive: 9000,
-		onConnect: (connectionParams, ws, ctx) => {
+		onConnect: async (connectionParams, ws, ctx) => {
 			console.log('Subscriptions are here'.blue.bold);
+			let token;
+			const cookie = ctx.request.headers.cookie;
+			if (cookie) {
+				token = parse(cookie).token;
+			}
+			if (!token) {
+				throw new ErrorResponse('Not Authenticated', 401);
+			}
+			const isAuth = await isAuthWithToken(token);
+			if (!isAuth) {
+				if (!token) {
+					throw new ErrorResponse('Not Authenticated', 401);
+				}
+			}
 		},
 		onDisconnect: () => console.log('Subscriptions disconnected'.red.bold),
 	},

@@ -25,3 +25,16 @@ export const isProtected = asycnHandler(async ({ req, res }) => {
 
 	return true;
 });
+
+export const isAuthWithToken = async (token) => {
+	
+	const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+	const user = await User.findById(decoded.id);
+
+	if (!user) {
+		return false;
+	}
+
+	return true;
+};
