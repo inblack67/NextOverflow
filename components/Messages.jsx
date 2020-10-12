@@ -11,6 +11,7 @@ const Messages = ({ room }) => {
 		variables: {
 			room,
 		},
+		fetchPolicy: 'network-only',
 	});
 
 	const subRes = useSubscription(subscribeToNewMessages, {
@@ -21,7 +22,7 @@ const Messages = ({ room }) => {
 
 	useEffect(
 		() => {
-			subscribeToMore({
+			const unSubscribe = subscribeToMore({
 				document: subscribeToNewMessages,
 				variables: {
 					room,
@@ -36,8 +37,9 @@ const Messages = ({ room }) => {
 					};
 				},
 			});
+			return () => unSubscribe();
 		},
-		[ subRes.loading ],
+		[ data ],
 	);
 
 	if (loading) {
