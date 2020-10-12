@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 import Preloader from './Preloader';
 
 const PostMessage = ({ room }) => {
-	const { handleSubmit, errors, register } = useForm({
-		defaultValues: {
-			text: 'hah',
-		},
-	});
+	const { handleSubmit, errors, register } = useForm();
 
 	const [ postMessage, { loading, data } ] = useMutation(newRoomMessage);
 

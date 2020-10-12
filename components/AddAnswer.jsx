@@ -8,11 +8,7 @@ import PropTypes from 'prop-types';
 const AddAnswer = ({ question }) => {
 	const [ submitting, setSubmitting ] = useState(false);
 
-	const { register, handleSubmit, errors } = useForm({
-		defaultValues: {
-			answer: 'Why Not?',
-		},
-	});
+	const { register, handleSubmit, errors } = useForm();
 
 	const [ addAnswer, { loading, data } ] = useMutation(addAnswerMutation, {
 		refetchQueries: [

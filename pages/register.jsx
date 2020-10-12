@@ -11,13 +11,7 @@ const Register = () => {
 
 	const [ imageUrl, setImageUrl ] = useState(null);
 
-	const { register, handleSubmit, errors } = useForm({
-		defaultValues: {
-			name: 'aman',
-			email: 'aman@gmail.com',
-			password: 'Aman123@',
-		},
-	});
+	const { register, handleSubmit, errors } = useForm();
 
 	const [ registerUser, { data, loading } ] = useMutation(registerMutation);
 

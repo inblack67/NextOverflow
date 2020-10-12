@@ -8,12 +8,7 @@ import Preloader from '../components/Preloader';
 const Login = () => {
 	const [ submitting, setSubmitting ] = useState(false);
 
-	const { register, handleSubmit, errors } = useForm({
-		defaultValues: {
-			email: 'aman@gmail.com',
-			password: 'Aman123@',
-		},
-	});
+	const { register, handleSubmit, errors } = useForm();
 
 	const [ login, { loading, data } ] = useMutation(loginMutation);
 

@@ -12,13 +12,7 @@ import IsAuthenticated from '../components/IsAuthenticated';
 const AskQuestion = () => {
 	const [ submitting, setSubmitting ] = useState(false);
 
-	const { register, handleSubmit, errors } = useForm({
-		defaultValues: {
-			title: 'Why Postman?',
-			description: 'Why Bother?',
-			tags: 'APIs',
-		},
-	});
+	const { register, handleSubmit, errors } = useForm();
 
 	const [ askQuestion, { loading, data } ] = useMutation(addQuestionMutation, {
 		refetchQueries: [
