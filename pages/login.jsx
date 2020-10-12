@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { loginMutation } from '../src/queries/auth';
@@ -43,47 +43,50 @@ const Login = () => {
 	}
 
 	return (
-		<div className='container'>
-			<p className='flow-text center'>Login</p>
-			<form onSubmit={handleSubmit(onLogin)}>
-				<div className='input-field'>
-					<input
-						type='email'
-						name='email'
-						ref={register({
-							required: 'Required!',
-						})}
-					/>
-					<label htmlFor='email' />
-					{errors.email ? (
-						<span className='helper-text red-text'>{errors.email.message}</span>
-					) : (
-						<span className='helper-text white-text'>Email</span>
-					)}
-				</div>
-				<div className='input-field'>
-					<input
-						type='password'
-						name='password'
-						ref={register({
-							required: 'Required!',
-						})}
-					/>
-					<label htmlFor='password' />
-					{errors.password ? (
-						<span className='helper-text red-text'>{errors.password.message}</span>
-					) : (
-						<span className='helper-text white-text'>Password</span>
-					)}
-				</div>
-				<div className='input-field'>
-					<button type='submit' className='btn red' disabled={submitting}>
-						Login
-					</button>
-				</div>
-			</form>
-		</div>
+		<Fragment>
+			<div className='container'>
+				<p className='flow-text center'>Login</p>
+				<form onSubmit={handleSubmit(onLogin)}>
+					<div className='input-field'>
+						<input
+							type='email'
+							name='email'
+							ref={register({
+								required: 'Required!',
+							})}
+						/>
+						<label htmlFor='email' />
+						{errors.email ? (
+							<span className='helper-text red-text'>{errors.email.message}</span>
+						) : (
+							<span className='helper-text white-text'>Email</span>
+						)}
+					</div>
+					<div className='input-field'>
+						<input
+							type='password'
+							name='password'
+							ref={register({
+								required: 'Required!',
+							})}
+						/>
+						<label htmlFor='password' />
+						{errors.password ? (
+							<span className='helper-text red-text'>{errors.password.message}</span>
+						) : (
+							<span className='helper-text white-text'>Password</span>
+						)}
+					</div>
+					<div className='input-field'>
+						<button type='submit' className='btn red' disabled={submitting}>
+							Login
+						</button>
+					</div>
+				</form>
+			</div>
+		</Fragment>
 	);
 };
+
 
 export default Login;

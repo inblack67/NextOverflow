@@ -12,6 +12,7 @@
     "@nexus/schema": "^0.15.0",
     "apollo-server-micro": "^2.16.1",
     "apollo-upload-client": "^14.1.1",
+    "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cookie": "^0.4.1",

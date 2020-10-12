@@ -9,6 +9,7 @@ import Comments from '../../components/Comments';
 import AddComment from '../../components/AddComment';
 import FormatDate from '../../components/FormatDate';
 import { Fragment } from 'react';
+import IsAuthenticated from '../../components/IsAuthenticated';
 
 const SingleQuestion = () => {
 	const router = useRouter();
@@ -29,42 +30,45 @@ const SingleQuestion = () => {
 	const { question } = data;
 
 	return (
-		<div className='container'>
-			<p className='flow-text center red-text'>Question</p>
-			<div className='card grey darken-4'>
-				<div className='card-content'>
-					<span className='card-title'>{question.title}</span>
-					<RenderMarkdown code={question.description} />
-					<p>
-						~ <span className='grey-text'>{question.user.name}</span>
-					</p>
-					<p className='blue-text'>
-						<FormatDate createdAt={question.createdAt} />
-					</p>
+		<Fragment>
+			<IsAuthenticated />
+			<div className='container'>
+				<p className='flow-text center red-text'>Question</p>
+				<div className='card grey darken-4'>
+					<div className='card-content'>
+						<span className='card-title'>{question.title}</span>
+						<RenderMarkdown code={question.description} />
+						<p>
+							~ <span className='grey-text'>{question.user.name}</span>
+						</p>
+						<p className='blue-text'>
+							<FormatDate createdAt={question.createdAt} />
+						</p>
+					</div>
+					<div className='card-action'>
+						<a href='#!'>{question.tags}</a>
+						{question.user._id === question._id && (
+							<Fragment>
+								<a href='#!' onClick={onDelete} className='red-text'>
+									Delete
+								</a>
+							</Fragment>
+						)}
+					</div>
 				</div>
-				<div className='card-action'>
-					<a href='#!'>{question.tags}</a>
-					{question.user._id === question._id && (
-						<Fragment>
-							<a href='#!' onClick={onDelete} className='red-text'>
-								Delete
-							</a>
-						</Fragment>
-					)}
+				<div>
+					<Answers question={id} />
+					<AddAnswer question={id} />
+					<Comments question={id} />
+					<AddComment question={id} />
 				</div>
+				<div
+					style={{
+						height: '10rem',
+					}}
+				/>
 			</div>
-			<div>
-				<Answers question={id} />
-				<AddAnswer question={id} />
-				<Comments question={id} />
-				<AddComment question={id} />
-			</div>
-			<div
-				style={{
-					height: '10rem',
-				}}
-			/>
-		</div>
+		</Fragment>
 	);
 };
 

@@ -1,30 +1,27 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/User'
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 import 'colors';
 import asycnHandler from '../middlewares/asyncHandler';
+import { initializeApollo } from './apollo';
+import { getMeQuery } from './queries/auth';
 
 // protect routes
-export const isProtected = asycnHandler(
-    async ({ req, res }) => {
+export const isProtected = asycnHandler(async ({ req, res }) => {
+	let token;
 
-        let token;
+	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+		token = req.headers.authorization.split(' ')[1];
+	} else if (req.cookies.token) {
+		token = req.cookies.token;
+	}
 
-        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-            token = req.headers.authorization.split(' ')[1];
-        }
+	if (!token) {
+		return false;
+	}
 
-        else if (req.cookies.token) {
-            token = req.cookies.token;
-        }
+	const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (!token) {
-            return false;
-        }
+	req.user = await User.findById(decoded.id);
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = await User.findById(decoded.id);
-
-        return true;
-    }
-)
+	return true;
+});
