@@ -1,5 +1,3 @@
-import { server } from '../src/server';
-
 const About = () => {
 	return (
 		<div className='container center'>
@@ -7,11 +5,6 @@ const About = () => {
 				<hr />
 				<h5>StackOverflow Clone And Beyond</h5>
 				<p>Nextjs | GraphQL | Apollo | MongoDB | Firestore | Materialize</p>
-				{process.env.NODE_ENV !== 'production' ? (
-					<a target='_blank' href={`${server}/api/graphql`} className='btn red'>
-						Go Play
-					</a>
-				) : null}
 				<p>
 					<strong>
 						Next<span className='red-text'>Overlow</span> &copy; 2020

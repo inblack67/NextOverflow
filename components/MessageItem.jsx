@@ -11,13 +11,15 @@ const MessageItem = ({ message: { text, createdAt, user } }) => {
 					<FormatDate createdAt={createdAt} />
 				</span>
 			</div>
-			<p>
-				<Link href='/dev/[id]' as={`/dev/${user._id}`}>
-					<a>
-						~ <span className='red-text'> {user.name}</span>
-					</a>
-				</Link>
-			</p>
+			<div>
+				<p>
+					<Link href='/dev/[id]' as={`/dev/${user._id}`}>
+						<a>
+							~ <span className='red-text'> {user.name}</span>
+						</a>
+					</Link>
+				</p>
+			</div>
 		</li>
 	);
 };
