@@ -10,7 +10,7 @@ import cookies from 'cookie';
 import ErrorResponse from '../../src/errorResponse';
 import redis from 'ioredis';
 import QuestionModel from '../../models/Question';
-import { RQUESTIONS } from '../../src/keys';
+import { RANSWERS, RCOMMENTS, RQUESTIONS } from '../../src/keys';
 import { parse, stringify } from 'flatted';
 
 connectDB();
@@ -20,6 +20,8 @@ const red = new redis();
 
 const fillRedis = async () => {
 	await red.del(RQUESTIONS);
+	await red.del(RANSWERS);
+	await red.del(RCOMMENTS);
 	const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
 	if (questions.length >= 1) {
 		const questionsStrings = questions.map((qn) => stringify(qn));

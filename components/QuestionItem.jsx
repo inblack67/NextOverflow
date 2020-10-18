@@ -6,7 +6,7 @@ import { deleteQuestionMutation, fetchAllQuestionsQuery } from '../src/queries/q
 import Preloader from './Preloader';
 import FormatDate from './FormatDate';
 
-const QuestionItem = ({ question: { title, createdAt, tags, description, _id, user: { name }, user }, currentUser }) => {
+const QuestionItem = ({ question: { title, createdAt, tags, description, _id, user: { name }, user } }) => {
 
 	const [ deleteQuestion, mutationResponse ] = useMutation(deleteQuestionMutation, {
 		variables: {
@@ -49,11 +49,11 @@ const QuestionItem = ({ question: { title, createdAt, tags, description, _id, us
 					<Link href='/question/[id]' as={`/question/${_id}`}>
 						<a>Explore</a>
 					</Link>
-					{currentUser._id === user._id ? (
+					{/* {currentUser._id === user._id ? (
 						<a href='#!' className='secondary-content' onClick={onDelete}>
 							Delete
 						</a>
-					) : null}
+					) : null} */}
 				</div>
 			</div>
 		</div>

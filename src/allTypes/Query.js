@@ -14,7 +14,7 @@ import CommentModel from '../../models/Comment';
 import RoomModel from '../../models/Room';
 import { Message } from './Message';
 import MessageModel from '../../models/Message';
-import { RQUESTIONS } from '../keys';
+import { RANSWERS, RQUESTIONS, RCOMMENTS } from '../keys';
 import { parse, stringify } from 'flatted';
 
 export const Query = queryType({
@@ -40,8 +40,19 @@ export const Query = queryType({
 			args: {
 				question: idArg(),
 			},
-			resolve: asyncHandler(async (_, { question }) => {
+			resolve: asyncHandler(async (_, { question }, { red }) => {
+				const rcomments = await red.lrange(RCOMMENTS, 0, -1);
+
+				if (rcomments.length >= 1) {
+					return rcomments.map((ans) => parse(ans));
+				}
+
 				const comments = await CommentModel.find({ question }).populate([ 'user', 'question' ]);
+
+				const commentsString = comments.map((comm) => stringify(comm));
+
+				red.lpush(RCOMMENTS, ...commentsString);
+
 				return comments.reverse();
 			}),
 		});
@@ -52,8 +63,14 @@ export const Query = queryType({
 			args: {
 				question: idArg(),
 			},
-			resolve: asyncHandler(async (_, { question }) => {
+			resolve: asyncHandler(async (_, { question }, { red }) => {
+				const ranswers = await red.lrange(RANSWERS, 0, -1);
+				if (ranswers.length >= 1) {
+					return ranswers.map((ans) => parse(ans));
+				}
 				const answers = await AnswerModel.find({ question }).populate([ 'user', 'question' ]);
+				const answersString = answers.map((ans) => stringify(ans));
+				red.lpush(RANSWERS, ...answersString);
 				return answers.reverse();
 			}),
 		});

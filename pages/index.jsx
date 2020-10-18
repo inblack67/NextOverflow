@@ -22,32 +22,32 @@ const index = () => {
 			<div className='container'>
 				<p className='flow-text center'>Questions</p>
 				<div className='row'>
-					{/* {data &&
+					{data &&
 						data.questions &&
 						data.questions.length > 1 &&
-						data.questions.map((question) => <QuestionItem question={question} key={question._id} />)} */}
+						data.questions.map((question) => <QuestionItem question={question} key={question._id} />)}
 				</div>
 			</div>
 		</Fragment>
 	);
 };
 
-export const getServerSideProps = async (ctx) => {
-	let isAuth = false;
-	const token = extractTokenFromCookie(ctx);
-	if (token) {
-		isAuth = await isAuthWithToken(token);
-	}
-	if (!isAuth) {
-		ctx.res.writeHead(302, {
-			Location: '/login',
-		});
-		ctx.res.end();
-		return { props: {} };
-	}
-	return {
-		props: {},
-	};
-};
+// export const getServerSideProps = async (ctx) => {
+// 	let isAuth = false;
+// 	const token = extractTokenFromCookie(ctx);
+// 	if (token) {
+// 		isAuth = await isAuthWithToken(token);
+// 	}
+// 	if (!isAuth) {
+// 		ctx.res.writeHead(302, {
+// 			Location: '/login',
+// 		});
+// 		ctx.res.end();
+// 		return { props: {} };
+// 	}
+// 	return {
+// 		props: {},
+// 	};
+// };
 
 export default index;

@@ -16,6 +16,6 @@ export const Room = objectType({
 			type: User,
 			nullable: true,
 		});
-		t.float('createdAt');
+		t.string('createdAt');
 	},
 });

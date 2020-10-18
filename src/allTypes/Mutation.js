@@ -17,7 +17,7 @@ import ErrorResponse from '../errorResponse';
 import { isProtected } from '../../src/isAuthenticated';
 import { GraphQLUpload } from 'graphql-upload';
 import { NEW_ROOM_MESSAGE, CHANNEL_NAME } from '../subscriptionTypes';
-import { RQUESTIONS } from '../keys';
+import { RQUESTIONS, RANSWERS, RCOMMENTS } from '../keys';
 import { parse, stringify } from 'flatted';
 
 export const Mutation = mutationType({
@@ -125,6 +125,7 @@ export const Mutation = mutationType({
 				const createdComment = await CommentModel.create({ content, question, user: ctx.req.user._id });
 
 				const newComment = await CommentModel.findById(createdComment._id).populate([ 'user', 'question' ]);
+				ctx.red.lpush(RCOMMENTS, stringify(newComment));
 				return newComment;
 			}),
 		});
@@ -139,6 +140,9 @@ export const Mutation = mutationType({
 				}
 				const createdAnswer = await AnswerModel.create({ content, question, user: ctx.req.user._id });
 				const newAnswer = await AnswerModel.findById(createdAnswer._id).populate([ 'user', 'question' ]);
+
+				ctx.red.lpush(RANSWERS, stringify(newAnswer));
+
 				return newAnswer;
 			}),
 		});

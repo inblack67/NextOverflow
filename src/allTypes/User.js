@@ -28,6 +28,6 @@ export const User = objectType({
 			nullable: true,
 		});
 		t.id('_id');
-		t.float('createdAt');
+		t.string('createdAt');
 	},
 });

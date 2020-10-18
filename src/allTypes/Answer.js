@@ -13,6 +13,6 @@ export const Answer = objectType({
 		t.field('user', {
 			type: User,
 		});
-		t.float('createdAt');
+		t.string('createdAt');
 	},
 });

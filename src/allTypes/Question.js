@@ -20,6 +20,6 @@ export const Question = objectType({
 		t.list.field('answers', {
 			type: Answer,
 		});
-		t.float('createdAt');
+		t.string('createdAt');
 	},
 });

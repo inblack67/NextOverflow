@@ -31,20 +31,20 @@ export interface NexusGenRootTypes {
   Answer: { // root type
     _id: string; // ID!
     content: string; // String!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Comment: { // root type
     _id: string; // ID!
     content: string; // String!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // root type
     _id: string; // ID!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     file?: string | null; // String
     image?: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
@@ -58,7 +58,7 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     description: string; // String!
     tags: string; // String!
     title: string; // String!
@@ -66,7 +66,7 @@ export interface NexusGenRootTypes {
   }
   Room: { // root type
     _id: string; // ID!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     description: string; // String!
     messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
@@ -80,7 +80,7 @@ export interface NexusGenRootTypes {
     _id: string; // ID!
     answers?: NexusGenRootTypes['Answer'][] | null; // [Answer!]
     comments?: NexusGenRootTypes['Comment'][] | null; // [Comment!]
-    createdAt: number; // Float!
+    createdAt: string; // String!
     email: string; // String!
     image: string; // String!
     messages?: NexusGenRootTypes['Message'][] | null; // [Message!]
@@ -102,20 +102,20 @@ export interface NexusGenFieldTypes {
   Answer: { // field return type
     _id: string; // ID!
     content: string; // String!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Comment: { // field return type
     _id: string; // ID!
     content: string; // String!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     question: NexusGenRootTypes['Question']; // Question!
     user: NexusGenRootTypes['User']; // User!
   }
   Message: { // field return type
     _id: string; // ID!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     file: string | null; // String
     image: string | null; // String
     room: NexusGenRootTypes['Room']; // Room!
@@ -161,7 +161,7 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][]; // [Answer!]!
     comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     description: string; // String!
     tags: string; // String!
     title: string; // String!
@@ -169,7 +169,7 @@ export interface NexusGenFieldTypes {
   }
   Room: { // field return type
     _id: string; // ID!
-    createdAt: number; // Float!
+    createdAt: string; // String!
     description: string; // String!
     messages: NexusGenRootTypes['Message'][] | null; // [Message!]
     title: string; // String!
@@ -183,7 +183,7 @@ export interface NexusGenFieldTypes {
     _id: string; // ID!
     answers: NexusGenRootTypes['Answer'][] | null; // [Answer!]
     comments: NexusGenRootTypes['Comment'][] | null; // [Comment!]
-    createdAt: number; // Float!
+    createdAt: string; // String!
     email: string; // String!
     image: string; // String!
     messages: NexusGenRootTypes['Message'][] | null; // [Message!]

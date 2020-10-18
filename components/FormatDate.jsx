@@ -2,11 +2,11 @@ import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 
 const FormatDate = ({ createdAt }) => {
-	return <Moment date={createdAt} format='MMMM Do YYYY' />;
+	return <Moment date={new Date(createdAt)} format='MMMM Do YYYY' />;
 };
 
 FormatDate.propTypes = {
-	createdAt: PropTypes.number.isRequired,
+	createdAt: PropTypes.string.isRequired,
 };
 
 export default FormatDate;
