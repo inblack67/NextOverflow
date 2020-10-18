@@ -22,4 +22,4 @@ const AnswerSchema = new Schema({
     },
 });
 
-module.exports = models.Answer || model('Answer', AnswerSchema);
+module.exports = (models && models.Answer) ?? model('Answer', AnswerSchema);

@@ -6,16 +6,32 @@ import errorHandler from '../../middlewares/errorHandler';
 import { connectDB } from '../../src/connectDB';
 import cors from 'cors';
 import { isAuthWithToken } from '../../src/isAuthenticated';
-import { parse } from 'cookie';
+import cookies from 'cookie';
 import ErrorResponse from '../../src/errorResponse';
+import redis from 'ioredis';
+import QuestionModel from '../../models/Question';
+import { RQUESTIONS } from '../../src/keys';
+import { parse, stringify } from 'flatted';
 
 connectDB();
 
 const pubsub = new PubSub();
+const red = new redis();
+
+const fillRedis = async () => {
+	await red.del(RQUESTIONS);
+	const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
+	if (questions.length >= 1) {
+		const questionsStrings = questions.map((qn) => stringify(qn));
+		red.lpush(RQUESTIONS, ...questionsStrings);
+	}
+};
+
+fillRedis().catch((err) => err);
 
 const apolloServer = new ApolloServer({
 	schema,
-	context: async ({ req, res }) => ({ req, res, pubsub }),
+	context: async ({ req, res }) => ({ req, res, pubsub, red }),
 
 	subscriptions: {
 		path: '/api/subscriptions',
@@ -25,7 +41,7 @@ const apolloServer = new ApolloServer({
 			let token;
 			const cookie = ctx.request.headers.cookie;
 			if (cookie) {
-				token = parse(cookie).token;
+				token = cookies.parse(cookie).token;
 			}
 			if (!token) {
 				throw new ErrorResponse('Not Authenticated', 401);

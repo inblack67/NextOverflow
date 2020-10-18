@@ -54,4 +54,4 @@ QuestionSchema.virtual('comments', {
     justOne: false
 });
 
-module.exports = models.Question || model('Question', QuestionSchema);
+module.exports = (models && models.Question) ?? model('Question', QuestionSchema);

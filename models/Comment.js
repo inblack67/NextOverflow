@@ -21,4 +21,4 @@ const CommentSchema = new Schema({
     },
 });
 
-module.exports = models.Comment || model('Comment', CommentSchema);
+module.exports = (models && models.Comment) ?? model('Comment', CommentSchema);

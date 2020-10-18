@@ -93,4 +93,4 @@ UserSchema.methods.matchPassword = async function(enteredPassword) {
 	return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = models.User || model('User', UserSchema);
+module.exports = (models && models.User) ?? model('User', UserSchema);

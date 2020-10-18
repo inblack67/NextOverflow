@@ -17,6 +17,8 @@ import ErrorResponse from '../errorResponse';
 import { isProtected } from '../../src/isAuthenticated';
 import { GraphQLUpload } from 'graphql-upload';
 import { NEW_ROOM_MESSAGE, CHANNEL_NAME } from '../subscriptionTypes';
+import { RQUESTIONS } from '../keys';
+import { parse, stringify } from 'flatted';
 
 export const Mutation = mutationType({
 	definition(t) {
@@ -170,7 +172,8 @@ export const Mutation = mutationType({
 					tags: tags || 'none',
 					user: ctx.req.user._id,
 				});
-				const newQuestion = QuestionModel.findById(createdQuestion._id).populate([ 'user', 'comment' ]);
+				const newQuestion = await QuestionModel.findById(createdQuestion._id).populate([ 'user', 'comment' ]);
+				ctx.red.lpush(RQUESTIONS, stringify(newQuestion));
 				return newQuestion;
 			}),
 		});

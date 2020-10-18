@@ -14,6 +14,8 @@ import CommentModel from '../../models/Comment';
 import RoomModel from '../../models/Room';
 import { Message } from './Message';
 import MessageModel from '../../models/Message';
+import { RQUESTIONS } from '../keys';
+import { parse, stringify } from 'flatted';
 
 export const Query = queryType({
 	definition(t) {
@@ -140,9 +142,10 @@ export const Query = queryType({
 		t.list.field('questions', {
 			type: Question,
 			description: 'Get All Questions',
-			resolve: asyncHandler(async () => {
-				const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
-				return questions.reverse();
+			resolve: asyncHandler(async (_, __, { red }) => {
+				const rquestions = (await red.lrange(RQUESTIONS, 0, -1)) || [];
+				const qns = rquestions.map((qn) => parse(qn));
+				return qns;
 			}),
 		});
 

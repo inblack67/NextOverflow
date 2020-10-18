@@ -4,6 +4,32 @@ import 'colors';
 import asycnHandler from '../middlewares/asyncHandler';
 import { initializeApollo } from './apollo';
 import { getMeQuery } from './queries/auth';
+import { parse } from 'cookie';
+import ErrorResponse from './errorResponse';
+
+export const extractTokenFromCookie = (ctx) => {
+	let token;
+	const cookie = ctx.req.headers.cookie;
+	if (cookie) {
+		token = parse(cookie).token;
+	}
+	return token;
+};
+
+export const isAuthWithToken = async (token) => {
+	const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+	try {
+		const user = await User.findById(decoded.id);
+		if (!user) {
+			return false;
+		}
+	} catch (err) {
+		console.error(err);
+	}
+
+	return true;
+};
 
 // protect routes
 export const isProtected = asycnHandler(async ({ req, res }) => {
@@ -25,16 +51,3 @@ export const isProtected = asycnHandler(async ({ req, res }) => {
 
 	return true;
 });
-
-export const isAuthWithToken = async (token) => {
-	
-	const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-	const user = await User.findById(decoded.id);
-
-	if (!user) {
-		return false;
-	}
-
-	return true;
-};

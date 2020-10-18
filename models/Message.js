@@ -34,4 +34,4 @@ const MessageSchema = new Schema({
 	},
 });
 
-module.exports = models.Message || model('Message', MessageSchema);
+module.exports = (models && models.Message) ?? model('Message', MessageSchema);

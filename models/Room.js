@@ -36,4 +36,4 @@ RoomSchema.virtual('users', {
 	justOne: false,
 });
 
-module.exports = models.Room || model('Room', RoomSchema);
+module.exports = (models && models.Room) ?? model('Room', RoomSchema);

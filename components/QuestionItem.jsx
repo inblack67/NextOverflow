@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useQuery, useMutation } from '@apollo/client';
-import { getMeQuery } from '../src/queries/auth';
 import { deleteQuestionMutation, fetchAllQuestionsQuery } from '../src/queries/questions';
 import Preloader from './Preloader';
 import FormatDate from './FormatDate';
 
-const QuestionItem = ({ question: { title, createdAt, tags, description, _id, user: { name }, user } }) => {
-	const { loading, data } = useQuery(getMeQuery);
+const QuestionItem = ({ question: { title, createdAt, tags, description, _id, user: { name }, user }, currentUser }) => {
 
 	const [ deleteQuestion, mutationResponse ] = useMutation(deleteQuestionMutation, {
 		variables: {
@@ -21,7 +19,7 @@ const QuestionItem = ({ question: { title, createdAt, tags, description, _id, us
 		],
 	});
 
-	if (loading || mutationResponse.loading) {
+	if (mutationResponse.loading) {
 		return <Preloader />;
 	}
 
@@ -51,7 +49,7 @@ const QuestionItem = ({ question: { title, createdAt, tags, description, _id, us
 					<Link href='/question/[id]' as={`/question/${_id}`}>
 						<a>Explore</a>
 					</Link>
-					{data && data.getMe._id === user._id ? (
+					{currentUser._id === user._id ? (
 						<a href='#!' className='secondary-content' onClick={onDelete}>
 							Delete
 						</a>
