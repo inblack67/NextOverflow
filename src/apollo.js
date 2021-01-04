@@ -16,15 +16,12 @@ function createIsomorphLink() {
 		const { HttpLink } = require('@apollo/client/link/http');
 		const { WebSocketLink } = require('@apollo/client/link/ws');
 
-		const currentHost = window.location.host;
-		console.log(currentHost);
-
 		const httpLink = new HttpLink({
-			uri: `http://${currentHost}/api/graphql`,
+			uri: `https://${process.env.NEXT_PUBLIC_DOMAIN}/api/graphql`,
 			credentials: 'same-origin',
 		});
 		const wsLink = new WebSocketLink({
-			uri: `ws://${currentHost}/api/subscriptions`,
+			uri: `wss://${process.env.NEXT_PUBLIC_DOMAIN}/api/subscriptions`,
 			options: {
 				reconnect: true,
 			},

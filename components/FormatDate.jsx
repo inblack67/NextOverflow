@@ -2,7 +2,14 @@ import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 
 const FormatDate = ({ createdAt }) => {
-	return <Moment date={createdAt} format='MMMM Do YYYY' />;
+	let finalDate = null;
+	const date = new Date(createdAt);
+	if (isNaN(date.getTime)) {
+		finalDate = new Date(+createdAt);
+	} else {
+		finalDate = date;
+	}
+	return <Moment date={finalDate} format='MMMM Do YYYY' />;
 };
 
 FormatDate.propTypes = {

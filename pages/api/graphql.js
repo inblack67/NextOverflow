@@ -8,7 +8,7 @@ import cors from 'cors';
 import { isAuthWithToken } from '../../src/isAuthenticated';
 import cookies from 'cookie';
 import ErrorResponse from '../../src/errorResponse';
-import redis from 'ioredis';
+// import redis from 'ioredis';
 import QuestionModel from '../../models/Question';
 import { RQUESTIONS } from '../../src/keys';
 import { parse, stringify } from 'flatted';
@@ -16,18 +16,18 @@ import { parse, stringify } from 'flatted';
 connectDB();
 
 const pubsub = new PubSub();
-const red = new redis();
+// const red = new redis();
 
-const fillRedis = async () => {
-	await red.del(RQUESTIONS);
-	const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
-	if (questions.length >= 1) {
-		const questionsStrings = questions.map((qn) => stringify(qn));
-		red.lpush(RQUESTIONS, ...questionsStrings);
-	}
-};
+// const fillRedis = async () => {
+// 	await red.del(RQUESTIONS);
+// 	const questions = await QuestionModel.find().populate([ 'user', 'comments', 'answers' ]);
+// 	if (questions.length >= 1) {
+// 		const questionsStrings = questions.map((qn) => stringify(qn));
+// 		red.lpush(RQUESTIONS, ...questionsStrings);
+// 	}
+// };
 
-fillRedis().catch((err) => err);
+// fillRedis().catch((err) => err);
 
 const apolloServer = new ApolloServer({
 	schema,
